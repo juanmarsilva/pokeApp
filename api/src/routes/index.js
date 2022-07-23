@@ -15,11 +15,10 @@ const getApiInfo = async () => {
     for(let pokemon of allPokemons) {
         const apiExtra = await axios.get(`${pokemon.url}`);
         pokemon.id = apiExtra.data.id;
-        pokemon.image = apiExtra.data.sprites["versions"]["generation-v"]['black-white']['animated']['front_default'];
+        pokemon.image = apiExtra.data.sprites["other"]["dream_world"]['front_default'];
         pokemon.types = apiExtra.data.types.map(t => t.type.name);
     }
 
-    console.log(allPokemons);
     return allPokemons;
 }
 
@@ -28,7 +27,7 @@ const getSpecificPokemon = async (name) => {
     const pokemon = {
         id: apiInfo.data.id,
         name: apiInfo.data.name,
-        image: apiInfo.data.sprites["versions"]["generation-v"]['black-white']['animated']['front_default'],
+        image: apiInfo.data.sprites["other"]["dream_world"]['front_default'],
         types: apiInfo.data.types.map(t => t.type.name),
         attack: apiInfo.data.stats[1]['base_stat'],
         defense: apiInfo.data.stats[2]['base_stat'],
@@ -61,11 +60,8 @@ const getAllPokemonNames = async () => {
 
 
 router.get('/pokemons', async (req, res) => {
-
     const { name } = req.query;
-
     if(name) {
-    
         const dbPokemon = await Pokemon.findOne({
             where: {
                 name
