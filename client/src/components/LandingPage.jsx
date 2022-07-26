@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import './LoadingPage.css';
 
 export default function LandingFunction() {
     return (
-        <div>
-            <h1>Welcome!</h1>
+        <div class="center-on-page">
+            <h1>Bienvenidos</h1>
             <Link to='/home'>
                 <button>Ingresar</button>
             </Link>

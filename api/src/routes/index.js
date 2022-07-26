@@ -17,6 +17,7 @@ const getApiInfo = async () => {
         pokemon.id = apiExtra.data.id;
         pokemon.image = apiExtra.data.sprites["other"]["dream_world"]['front_default'];
         pokemon.types = apiExtra.data.types.map(t => t.type.name);
+        pokemon.attack = apiExtra.data.stats[1]['base_stat'];
     }
 
     return allPokemons;
@@ -24,6 +25,7 @@ const getApiInfo = async () => {
 
 const getSpecificPokemon = async (name) => {
     const apiInfo = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
+    let specificPokemon = [];
     const pokemon = {
         id: apiInfo.data.id,
         name: apiInfo.data.name,
@@ -36,11 +38,12 @@ const getSpecificPokemon = async (name) => {
         height: apiInfo.data.height,
         weight: apiInfo.data.weight,
     }
-    return pokemon;
+    specificPokemon.push(pokemon);
+    return specificPokemon;
 }
 
 const getDbInfo = async () => {
-    return await Pokemon.findAll({
+    const dbInfo = await Pokemon.findAll({
         include: {
             model: Types,
             attributes: ['name'],
@@ -49,6 +52,7 @@ const getDbInfo = async () => {
             },
         },
     });
+    return dbInfo;
 };
 
 const getAllPokemonNames = async () => {
@@ -62,6 +66,7 @@ const getAllPokemonNames = async () => {
 router.get('/pokemons', async (req, res) => {
     const { name } = req.query;
     if(name) {
+        let arrPokemon = [];
         const dbPokemon = await Pokemon.findOne({
             where: {
                 name
@@ -74,9 +79,11 @@ router.get('/pokemons', async (req, res) => {
                 },
             },
         });
-    
-        if(dbPokemon) return res.status(200).send(dbPokemon);
-        
+        if(dbPokemon) {
+            arrPokemon.push(dbPokemon);
+            return res.status(200).send(arrPokemon)
+        }
+       
         const specificPokemon = await getSpecificPokemon(name);
         specificPokemon 
         ? res.status(200).send(specificPokemon)
@@ -90,18 +97,19 @@ router.get('/pokemons', async (req, res) => {
 
 
 router.post('/pokemons', async (req, res) => {
-    const { name, health, attack, defense, speed, height, weight, createdInDb, types} = req.body;
+    const { name, health, attack, defense, speed, height, weight, createdInDb, types, image} = req.body;
     if(!name) throw new Error('Faltan datos obligatorios!') 
     try {
         const newPokemon = await Pokemon.create({
-            name,
+            name: name.toLowerCase(),
             health,
             attack,
             defense, 
             speed,
             height,
             weight,
-            createdInDb
+            createdInDb,
+            image
         });
 
         const typesInDb = await Types.findAll({

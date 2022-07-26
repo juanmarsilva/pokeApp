@@ -2,9 +2,10 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { getPokemons, getTypes, filterByTypes, filterCreated } from "../actions";
+import { getPokemons, getTypes, filterByTypes, filterCreated, orderByName, orderByAttack } from "../actions";
 import CardPokemon from "./CardPokemon";
 import Paginado from "./Paginado";
+import SearchBar from "./SearchBar";
 
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
     const indexOfLastPokemon = currentPage * pokemonsPerPage; // 12 
     const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage; // 0 
     const currentPokemons = allPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon); // aca se guardan los pokemons que van a ir en cada pagina
+    const [ orden, setOrden ] = useState('');
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -44,13 +46,33 @@ export default function Home() {
         dispatch(filterCreated(e.target.value));
     };
 
+    function handleOrderByName(e) {
+        e.preventDefault();
+        dispatch(orderByName(e.target.value));
+        setCurrentPage(1);
+        setOrden(`Ordenado ${e.target.value}`)
+    };
+
+    function handleOrderByAttack(e) {
+        e.preventDefault();
+        dispatch(orderByAttack(e.target.value));
+        setCurrentPage(1);
+        setOrden(`Ordenado ${e.target.value}`);
+    }
+
     return (
         <div>
             <Link to='/pokemons'>Crear Pokemon</Link>
             <h1>PokeApp</h1>
             <button onClick={e => handleClick(e)}>Volver a cargar todos los pokemons</button>
             <div>
-                <select>
+                <label>Name</label>
+                <select onChange={(e) => handleOrderByName(e)}>
+                    <option value='asc'>A-Z</option>
+                    <option value='desc'>Z-A</option>
+                </select>
+                <label>Attack</label>
+                <select onChange={(e) => handleOrderByAttack(e)}>
                     <option value='asc'>Ascendente</option>
                     <option value='desc'>Descendente</option>
                 </select>
@@ -64,12 +86,13 @@ export default function Home() {
                     {
                         allTypes?.map(type => {
                             return (
-                                <option value={type.name}>{`${type.name}`}</option>
+                                <option value={type.name}> {`${type.name}`} </option>
                             )
                         })
                     }
                 </select>
                 <Paginado pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
+                <SearchBar />
                 {
                     !currentPokemons.length ? <h3>Cargando...</h3> : currentPokemons.map(p => {
                         return (
