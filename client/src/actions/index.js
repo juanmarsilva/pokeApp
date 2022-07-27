@@ -10,12 +10,35 @@ export function getPokemons() {
     };
 };
 
+
+export function getNamePokemons (name) {
+    return async function(dispatch) {
+        try {
+            var json = await axios.get('http://localhost:3001/pokemons?name=' + name);
+            return dispatch({
+                type: 'GET_NAME_POKEMONS',
+                payload: json.data
+            });
+        } catch(err) {
+            console.log(err);
+        };
+    };
+};
+
+export function postPokemons(payload) {
+    return async function(dispatch) {
+        const response = await axios.post('http://localhost:3001/pokemons', payload);
+        console.log(response);
+        return response;
+    }
+}
+
 export function getTypes() {
     return async (dispatch) => {
-        var json = await axios.get('http://localhost:3001/types');
+        var types = await axios.get('http://localhost:3001/types');
         return dispatch({
             type: 'GET_TYPES',
-            payload: json.data
+            payload: types.data
         });
     };
 };
@@ -48,16 +71,5 @@ export function orderByAttack(payload) {
     };
 };
 
-export function getNamePokemons (name) {
-    return async function(dispatch) {
-        try {
-            var json = await axios.get('http://localhost:3001/pokemons?name=' + name);
-            return dispatch({
-                type: 'GET_NAME_POKEMONS',
-                payload: json.data
-            });
-        } catch(err) {
-            console.log(err);
-        };
-    };
-};
+
+

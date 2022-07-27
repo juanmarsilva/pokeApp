@@ -4,11 +4,13 @@ import './LoadingPage.css';
 
 export default function LandingFunction() {
     return (
-        <div class="center-on-page">
-            <h1>Bienvenidos</h1>
+        <div>
             <Link to='/home'>
+                <h1>Bienvenidos</h1>
                 <button>Ingresar</button>
             </Link>
         </div>
     )
 }
+
+

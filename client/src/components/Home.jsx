@@ -86,7 +86,7 @@ export default function Home() {
                     {
                         allTypes?.map(type => {
                             return (
-                                <option value={type.name}> {`${type.name}`} </option>
+                                <option value={type.name}> {type.name} </option>
                             )
                         })
                     }
