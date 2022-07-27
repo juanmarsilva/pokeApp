@@ -7,9 +7,9 @@ const validate = (input) => {
     let errors = {};
     if(!input.name) {
         errors.name = 'Se requiere un nombre!';
-    } else if(input.health < 0 || input.attack < 0 || input.defense < 0 || input.speed < 0 || input.height < 0 || input.weight < 0) {
+    } else if(input.hp < 0 || input.attack < 0 || input.defense < 0 || input.speed < 0 || input.height < 0 || input.weight < 0) {
         errors.errNegative = 'Los valores no pueden ser negativos'; 
-    } else if(input.health > 250 || input.attack > 250 || input.defense > 250 || input.speed > 250) {
+    } else if(input.hp > 250 || input.attack > 250 || input.defense > 250 || input.speed > 250) {
         errors.errStats = 'No puede ser mayor a 250';
     } else if(input.height > 150) {
         errors.heigth = 'No puede medir mas de 150 metros!';
@@ -33,7 +33,7 @@ export default function PokemonCreate() {
 
     const [ input, setInput ] = useState({
         name: '',
-        health: 0,
+        hp: 0,
         attack: 0,
         defense: 0,
         speed: 0,
@@ -69,7 +69,7 @@ export default function PokemonCreate() {
         alert('Personaje creado correctamente!');
         setInput({
             name: '',
-            health: 0,
+            hp: 0,
             attack: 0,
             defense: 0,
             speed: 0,
@@ -108,8 +108,8 @@ export default function PokemonCreate() {
                 </div>
                 <div>
                     <h3>Especificaciones</h3>
-                    <label>health: </label>
-                    <input type='number' value={input.health} name='health' onChange={(e) => handleChange(e)}></input>
+                    <label>hp: </label>
+                    <input type='number' value={input.hp} name='hp' onChange={(e) => handleChange(e)}></input>
                     <label>attack: </label>
                     <input type='number' value={input.attack} name='attack' onChange={(e) => handleChange(e)}></input>
                     <label>defense: </label>

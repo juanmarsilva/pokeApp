@@ -23,7 +23,7 @@ const getApiInfo = async () => {
     return allPokemons;
 }
 
-const getSpecificPokemon = async (name) => {
+const getSpecificPokemonByName = async (name) => {
     const apiInfo = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
     let specificPokemon = [];
     const pokemon = {
@@ -40,7 +40,8 @@ const getSpecificPokemon = async (name) => {
     }
     specificPokemon.push(pokemon);
     return specificPokemon;
-}
+};
+
 
 const getDbInfo = async () => {
     const dbInfo = await Pokemon.findAll({
@@ -69,7 +70,7 @@ router.get('/pokemons', async (req, res) => {
         let arrPokemon = [];
         const dbPokemon = await Pokemon.findOne({
             where: {
-                name
+                name: name.toLowerCase()
             },
             include: {
                 model: Types,
@@ -79,12 +80,13 @@ router.get('/pokemons', async (req, res) => {
                 },
             },
         });
+
         if(dbPokemon) {
             arrPokemon.push(dbPokemon);
             return res.status(200).send(arrPokemon)
         }
        
-        const specificPokemon = await getSpecificPokemon(name);
+        const specificPokemon = await getSpecificPokemonByName(name);
         specificPokemon 
         ? res.status(200).send(specificPokemon)
         : res.status(404).send('No se encontro dicho pokemon')
@@ -97,12 +99,12 @@ router.get('/pokemons', async (req, res) => {
 
 
 router.post('/pokemons', async (req, res) => {
-    const { name, health, attack, defense, speed, height, weight, createdInDb, types, image} = req.body;
+    const { name, hp, attack, defense, speed, height, weight, createdInDb, types, image} = req.body;
     if(!name) throw new Error('Faltan datos obligatorios!') 
     try {
         const newPokemon = await Pokemon.create({
             name: name.toLowerCase(),
-            health,
+            hp,
             attack,
             defense, 
             speed,
@@ -129,12 +131,29 @@ router.post('/pokemons', async (req, res) => {
 
 router.get('/pokemons/:id', async (req, res) => {
     const { id } = req.params;
-    try {
-        const pokemon = await getSpecificPokemon(id);
-        return res.status(200).send(pokemon)
-    } catch(err) {
-        return res.status(404).send(`No existe dicho pokemon!`);
+    if(id.length > 5) {
+        let arrPokemon = [];
+        const dbPokemon = await Pokemon.findOne({
+            where: {
+                id: id
+            },
+            include: {
+                model: Types,
+                attributes: ['name'],
+                through: {
+                    attributes: [],
+                },
+            },
+        });
+    
+        if(dbPokemon) {
+            arrPokemon.push(dbPokemon);
+            return res.status(200).send(arrPokemon)
+        };
     };
+    const pokemon = await getSpecificPokemonByName(id);
+    return res.status(200).send(pokemon);
+    
 });
 
 

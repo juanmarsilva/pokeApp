@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    health: {
+    hp: {
       type: DataTypes.FLOAT,
       allowNull: true,
     },
@@ -38,14 +38,14 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull: true,
     },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     createdInDb: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
-    },
-    image: {
-      type: DataTypes.STRING,
-      allowNull: true,
     }
   });
 };

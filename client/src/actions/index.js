@@ -43,6 +43,22 @@ export function getTypes() {
     };
 };
 
+
+export function getPokemonDetails(id) {
+    return async function(dispatch) {
+        try {
+            var json = await axios.get('http://localhost:3001/pokemons/' + id);
+            return dispatch({
+                type: 'GET_POKEMON_DETAILS',
+                payload: json.data
+            });
+        } catch (err) {
+            console.log(err);
+        };
+    };
+};
+
+
 export function filterByTypes(payload) {
     return {
         type: 'FILTER_BY_TYPES',
