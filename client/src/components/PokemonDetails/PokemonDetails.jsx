@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePokemon, getPokemonDetails, getPokemons } from "../actions";
+import { deletePokemon, getPokemonDetails, getPokemons } from "../../actions";
 
 export default function PokemonDetails(props) {
 

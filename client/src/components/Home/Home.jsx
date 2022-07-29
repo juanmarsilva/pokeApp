@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { getPokemons, getTypes, filterByTypes, filterCreated, orderByName, orderByAttack } from "../../actions";
-import CardPokemon from "../CardPokemon";
-import Paginado from "../Paginado";
-import SearchBar from "../SearchBar";
+import CardPokemon from "../Card/CardPokemon";
+import Paginated from "../Paginated/Paginated";
+import SearchBar from "../SearchBar/SearchBar";
 import s from './Home.module.css';
 
 
@@ -92,7 +92,7 @@ export default function Home() {
                         })
                     }
                 </select>
-                <Paginado pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
+                <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
                 <SearchBar />
                 {
                     !currentPokemons.length ? <h3>Cargando...</h3> : currentPokemons.map(p => {
