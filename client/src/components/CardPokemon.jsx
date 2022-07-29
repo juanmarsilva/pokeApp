@@ -1,7 +1,8 @@
-import React from "react";
-import './CardPokemon.css'
+import React, { useEffect } from "react";
+import './CardPokemon.css';
 
 export default function CardPokemon({ name, image, types}) {
+
     return (
         <div className="card">
             <h3>{name[0].toUpperCase() + name.slice(1)}</h3>

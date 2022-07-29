@@ -1,15 +1,24 @@
 import React, { useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPokemonDetails } from "../actions";
+import { deletePokemon, getPokemonDetails, getPokemons } from "../actions";
 
 export default function PokemonDetails(props) {
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(getPokemonDetails(props.match.params.id));
-    }, [dispatch])
+    }, [dispatch]);
+
+    const handleDelete = (id, e) => {
+        e.preventDefault()
+        dispatch(deletePokemon(id));
+        alert('Pokemon eliminado correctamente')
+        history.push('/home');
+        dispatch(getPokemons());
+    };
 
     const pokemon = useSelector((state) => state.pokemonDetails)
 
@@ -30,6 +39,7 @@ export default function PokemonDetails(props) {
                         <h4>height: {pokemon[0]['height']}</h4>
                         <h4>weight: {pokemon[0]['weight']}</h4>
                         <h4>hp: {pokemon[0]['hp']}</h4>
+                        {pokemon[0].hasOwnProperty('createdInDb') ? <button onClick={(e) => handleDelete(pokemon[0]['id'], e)}>Eliminar</button> : <></>}
                     </div>
                 : <h2>Loading..</h2>
             }

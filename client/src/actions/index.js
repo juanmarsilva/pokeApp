@@ -87,5 +87,20 @@ export function orderByAttack(payload) {
     };
 };
 
+export function deletePokemon (id) {
+    return async function(dispatch) {
+        try {
+            var json = await axios.delete(`http://localhost:3001/pokemons/${id}`);
+            console.log(json.data);
+            return dispatch({
+                type: 'DELETE_POKEMON',
+                payload: json.data
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+};
+
 
 

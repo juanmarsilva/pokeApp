@@ -63,7 +63,6 @@ const getAllPokemonNames = async () => {
     return infoTotal;
 };
 
-
 router.get('/pokemons', async (req, res) => {
     const { name } = req.query;
     if(name) {
@@ -152,23 +151,35 @@ router.get('/pokemons/:id', async (req, res) => {
         };
     };
     const pokemon = await getSpecificPokemonByName(id);
-    return res.status(200).send(pokemon);
-    
+    return res.status(200).send(pokemon); 
 });
-
 
 router.get('/types', async (req, res) => {
     const typesApi = await axios.get('https://pokeapi.co/api/v2/type');
     const pokemonTypes = typesApi.data.results.map(type => type.name);
-    pokemonTypes.forEach(el => {
+    pokemonTypes.forEach(t => {
         Types.findOrCreate({
             where: {
-                name: el
+                name: t
             }
         })
     })
     const allTypes = await Types.findAll();
     res.status(200).send(allTypes);
+});
+
+router.delete('/pokemons/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletePokemon = await Pokemon.destroy({
+            where: {
+                id: id
+            }
+        });
+        return res.status(200).json('Pokemon eliminado correctamente!');
+    } catch(err) {
+        console.log(err);
+    };
 });
 
 
