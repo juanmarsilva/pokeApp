@@ -13,9 +13,9 @@ export default function PokemonDetails(props) {
     }, [dispatch]);
 
     const handleDelete = (id, e) => {
-        e.preventDefault()
+        e.preventDefault();
         dispatch(deletePokemon(id));
-        alert('Pokemon eliminado correctamente')
+        alert('Pokemon eliminado correctamente');
         history.push('/home');
         dispatch(getPokemons());
     };

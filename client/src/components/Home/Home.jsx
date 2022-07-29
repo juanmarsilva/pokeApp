@@ -2,10 +2,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { getPokemons, getTypes, filterByTypes, filterCreated, orderByName, orderByAttack } from "../actions";
-import CardPokemon from "./CardPokemon";
-import Paginado from "./Paginado";
-import SearchBar from "./SearchBar";
+import { getPokemons, getTypes, filterByTypes, filterCreated, orderByName, orderByAttack } from "../../actions";
+import CardPokemon from "../CardPokemon";
+import Paginado from "../Paginado";
+import SearchBar from "../SearchBar";
+import s from './Home.module.css';
 
 
 export default function Home() {

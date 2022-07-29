@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
-import Home from './components/Home';
+import Home from './components/Home/Home.jsx';
 import CreatePokemon from './components/CreatePokemon';
 import PokemonDetails from './components/PokemonDetails'
 
