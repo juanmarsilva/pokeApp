@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
-import './CardPokemon.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import './CardPokemon.module.css';
 
-export default function CardPokemon({ name, image, types}) {
+export default function CardPokemon({ name, image, types, id}) {
 
     return (
         <div className="card">
-            <h3>{name[0].toUpperCase() + name.slice(1)}</h3>
+            <Link to={`/home/${id}`}>
+                <h3>{name[0].toUpperCase() + name.slice(1)}</h3>
+            </Link>
             {types?.map(t => {
                 if(typeof t === 'object') return ( <h5>{`${t.name[0].toUpperCase() + t.name.slice(1)}`}</h5> )
                 return (
