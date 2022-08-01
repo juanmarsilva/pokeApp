@@ -1,35 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import InputRange from "../InputRange/InputRange";
+import s from './Form.module.css';
 
-export default function Form({handleSelect, handleChange, handleSubmit, handleDelete, input, types}) {
+export default function Form({handleSelect, handleChange, handleSubmit, handleDelete, input, types, errors}) {
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
-            <div>
+        <form onSubmit={(e) => handleSubmit(e)} className={s.form}>
+            <div className={s.container}>
                 <label>Nombre</label>
-                <input type='text' value={input.name} name='name' onChange={handleChange}></input>
+                <input type='text' value={input.name} name='name' onChange={(e) => handleChange(e)} />
+                {errors?.name}
             </div>
-            <div>
-                <h3>Especificaciones</h3>
-                <label>hp: {input.hp}</label>
-                <input type='range' min='0' max='500' value={input.hp} name='hp' onChange={(e) => handleChange(e)}></input>
-                <label>attack: {input.attack}</label>
-                <input type='range' min='0' max='500' value={input.attack} name='attack' onChange={(e) => handleChange(e)}></input>
-                <label>defense: {input.defense}</label>
-                <input type='range' min='0' max='500' value={input.defense} name='defense' onChange={(e) => handleChange(e)}></input>
-                <label>speed: {input.speed}</label>
-                <input type='range' min='0' max='500' value={input.speed} name='speed' onChange={(e) => handleChange(e)}></input>
-                <label>height: {input.height}cm</label>
-                <input type='range' min='0' max='10000' value={input.height} name='height' onChange={(e) => handleChange(e)}></input>
-                <label>weight: {input.weight}Kg</label>
-                <input type='range' min='0' max='500' value={input.weight} name='weight' onChange={(e) => handleChange(e)}></input>
+            <div className={s.container}>
+                <InputRange handleChange={handleChange} value={input.hp} name='hp' />
+                <InputRange handleChange={handleChange} value={input.attack} name='attack' />
+                <InputRange handleChange={handleChange} value={input.defense} name='defense' />
+                <InputRange handleChange={handleChange} value={input.speed} name='speed' />
             </div>
-            <div>
+            <div className={s.container}>
+                <label>Height: </label>
+                <input type='number' value={input.height} name='height' onChange={(e) => handleChange(e)} />
+                {errors?.height}
+                
+                <label>Weight: </label>
+                <input type='number' value={input.weight} name='weight' onChange={(e) => handleChange(e)} />
+                {errors?.weight}
+            </div>
+            <div className={s.container}>
                 <label>Imagen</label>
-                <input type='url' value={input.image} name='image' onChange={handleChange}></input>
+                <input type='url' value={input.image} name='image' onChange={handleChange} />
             </div>
             <div>
                 <h3>Types</h3>
-                <select onChange={(e) => handleSelect(e)}>
+                <select onChange={(e) => handleSelect(e)} disabled={input.types.length === 2 ? true : false}>
                     {
                         types?.map(type => {
                             return (
@@ -48,9 +51,10 @@ export default function Form({handleSelect, handleChange, handleSubmit, handleDe
                         )
                     })}
                 </ul>
+                {errors?.types}
             </div>
             <div>
-                <button type="submit">Crear Pokemon</button>
+                <button type="submit" disabled={errors.name || errors.weight || errors.height ? true : false}>Crear Pokemon</button>
             </div>
         </form>
     )

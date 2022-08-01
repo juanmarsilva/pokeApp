@@ -5,6 +5,34 @@ import { getPokemons, getTypes, postPokemons } from "../../actions";
 import Form from '../Form/Form';
 
 
+const validate = (input) => {
+    let errors = {};
+    
+    if(!input.name) {
+        errors.name = 'Se requiere un nombre!'
+    };
+
+    if(input.types.length === 0) {
+        errors.types = 'Tienes que seleccionar al menos un tipo';
+    } else if(input.types.length > 2) {
+        errors.types = 'No puedes elegir mas de dos tipos';
+    };
+
+    if(input.height > 1000) {
+        errors.height = 'Maximo 1000 metros';
+    } else if(input.height < 0) {
+        errors.height = 'No se admiten valores negativos!'
+    }
+
+    if(input.weight > 10000) {
+        errors.weight = 'Maximo 10.000Kg';
+    }  else if(input.weight < 0) {
+        errors.weight = 'No se admiten valores negativos!'
+    }
+
+    return errors;
+}
+
 export default function PokemonCreate() {
 
     const dispatch = useDispatch();
@@ -23,12 +51,17 @@ export default function PokemonCreate() {
         types: []
     });
 
+    const [ errors, setErrors ] = useState({});
 
     const handleChange = (e) => {
         setInput({
             ...input, 
             [e.target.name]: e.target.value
         });
+        setErrors(validate({
+            ...input,
+            [e.target.name]: e.target.value
+        }));
     };
 
     const handleSelect = (e) => {
@@ -36,13 +69,17 @@ export default function PokemonCreate() {
             ...input, 
             types: [...input.types, e.target.value]
         });
+        setErrors(validate({
+            ...input,
+            types: [...input.types, e.target.value]
+        }));
     }; 
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(postPokemons(input));
         dispatch(getPokemons());
-        alert('Personaje creado correctamente!');
+        alert('Pokemon creado correctamente!');
         setInput({
             name: '',
             hp: 0,
@@ -75,7 +112,7 @@ export default function PokemonCreate() {
                 <button>Volver</button>
             </Link>
             <h1>Crea tu Pokemon</h1>
-            <Form handleSubmit={handleSubmit} handleChange={handleChange} handleSelect={handleSelect} handleDelete={handleDelete} input={input} types={types}/>
+            <Form handleSubmit={handleSubmit} handleChange={handleChange} handleSelect={handleSelect} handleDelete={handleDelete} input={input} types={types} errors={errors} />
         </div>
     )
 

@@ -3,13 +3,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { getPokemons, getTypes, filterByTypes, filterCreated, orderByName, orderByAttack } from "../../actions";
-import CardPokemon from "../Card/CardPokemon";
 import Paginated from "../Paginated/Paginated";
 import SearchBar from "../SearchBar/SearchBar";
 import s from './Home.module.css';
 import Filters from "../Filters/Filters";
 import Orderings from "../Orderings/Orderings";
-import Loader from "../Loader/Loader";
 import CardsPokemon from "../Cards/CardsPokemon";
 
 
@@ -66,16 +64,25 @@ export default function Home() {
 
     return (
         <div>
-            <Link to='/pokemons'>Crear Pokemon</Link>
-            <h1>PokeApp</h1>
-            <button onClick={e => handleClick(e)}>Volver a cargar todos los pokemons</button>
             <div>
+                <img src="https://e7.pngegg.com/pngimages/906/122/png-clipart-pokemon-logo-pokemon-logo.png" className={s.image} alt="img not found" />
+            </div>
+            <div className={s.container}>
                 <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack}/>
                 <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} />
-                <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
+                <button onClick={e => handleClick(e)}>Recharge Pokemons</button>
+                <Link to='/pokemons'><button>Create Pokemons</button></Link>
                 <SearchBar />   
+            </div>
+            {/* <div>
+                <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
+            </div>
+            <div>
                 <CardsPokemon currentPokemons={currentPokemons}/>
             </div>
+            <div>
+                <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
+            </div> */}
         </div>
     )
 
