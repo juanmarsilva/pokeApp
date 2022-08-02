@@ -21,3 +21,4 @@ export default function CardPokemon({ name, image, types, id}) {
         </div>
     )
 }
+

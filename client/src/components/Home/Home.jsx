@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { getPokemons, getTypes, filterByTypes, filterCreated, orderByName, orderByAttack } from "../../actions";
+import { getPokemons, getTypes, filterByTypes, filterCreated, orderByName, orderByAttack, orderByAtt } from "../../actions";
 import Paginated from "../Paginated/Paginated";
 import SearchBar from "../SearchBar/SearchBar";
 import s from './Home.module.css';
@@ -58,7 +58,7 @@ export default function Home() {
 
     function handleOrderByAttack(e) {
         e.preventDefault();
-        dispatch(orderByAttack(e.target.value));
+        dispatch(orderByAtt(e.target.value));
         setCurrentPage(1);
         setOrden(`Ordenado ${e.target.value}`);
     }
@@ -77,7 +77,7 @@ export default function Home() {
                 <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
             </div>
             <div>
-                <CardsPokemon currentPokemons={currentPokemons}/>
+              <CardsPokemon currentPokemons={currentPokemons}/>
             </div>
         </div>
     )

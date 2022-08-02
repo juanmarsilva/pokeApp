@@ -20,32 +20,10 @@ function rootReducer(state=initialState, action) {
                 ...state,
                 types: action.payload
             };
-        case 'FILTER_BY_TYPES': 
-            const allPokemons = state.allPokemons;
-            const filterPokemons = action.payload === 'All' ? allPokemons : allPokemons.filter(pokemon => pokemon.types.includes(action.payload));
-            const pokemonsOfDb = allPokemons.filter(pokemon => pokemon.createdInDb);
-            let filterPokemonsDb = [];
-            let allPokemonsFiltered = [];
-            if(pokemonsOfDb.length) {
-                pokemonsOfDb.forEach(p => {
-                    if(action.payload === 'All') filterPokemonsDb = pokemonsOfDb;
-                    if(p.types[0] && p.types[1]) {
-                        if(p.types[0]['name'] === action.payload || p.types[1]['name'] === action.payload) filterPokemonsDb.push(p);
-                    } else if(p.types[0]) {
-                        if(p.types[0]['name'] === action.payload) filterPokemonsDb.push(p);
-                    };
-                });
-            };
-            if(filterPokemonsDb.length) {
-                allPokemonsFiltered = filterPokemons.concat(filterPokemonsDb);
-                return {
-                    ...state,
-                    pokemons: allPokemonsFiltered
-                };
-            };
+        case 'FILTER_BY_TYPES':
             return {
                 ...state,
-                pokemons: filterPokemons
+                pokemons: action.payload
             }
         case 'FILTER_CREATED':
             const allPokemons2 = state.allPokemons;
@@ -72,6 +50,11 @@ function rootReducer(state=initialState, action) {
                 ...state, 
                 pokemons: orderByNameArr
             };
+        case 'ORDER_POKEMONS':
+            return {
+                ...state,
+                pokemons: action.payload,
+            }
         case 'ORDER_BY_ATTACK':
             let orderByAttackArr = action.payload === 'asc' ?
                 state.pokemons.sort((a, b) => {

@@ -64,7 +64,47 @@ const getAllPokemonNames = async () => {
 };
 
 router.get('/pokemons', async (req, res) => {
-    const { name } = req.query;
+    const { name, type, order } = req.query;
+    
+    const allPokemons = await getAllPokemonNames();
+    
+    if(order) {
+        let orderByAttackArr = order === 'asc' ?
+                allPokemons.sort((a, b) => {
+                    if(a.attack > b.attack) return 1;
+                    if(b.attack > a.attack) return -1;
+                    return 0;
+                }) : 
+                allPokemons.sort((a, b) => {
+                    if(a.attack > b.attack) return -1;
+                    if(b.attack > a.attack) return 1;
+                    return 0;
+                });
+        return res.status(200).send(orderByAttackArr);
+    }
+
+    if(type) {
+        const filterPokemons = type === 'All' ? allPokemons : allPokemons.filter(pokemon => pokemon.types.includes(type));
+        const pokemonsOfDb = allPokemons.filter(pokemon => pokemon.createdInDb);
+        let filterPokemonsDb = [];
+        let allPokemonsFiltered = [];
+        if(pokemonsOfDb.length) {
+            pokemonsOfDb.forEach(p => {
+                if(type === 'All') filterPokemonsDb = pokemonsOfDb;
+                if(p.types[0] && p.types[1]) {
+                    if(p.types[0]['name'] === type || p.types[1]['name'] === type) filterPokemonsDb.push(p);
+                } else if(p.types[0]) {
+                    if(p.types[0]['name'] === type) filterPokemonsDb.push(p);
+                };
+            });
+        };
+        if(filterPokemonsDb.length) {
+            allPokemonsFiltered = filterPokemons.concat(filterPokemonsDb);
+            return res.status(200).send(allPokemonsFiltered)
+        };
+        return res.status(200).send(filterPokemons)
+    }
+
     if(name) {
         let arrPokemon = [];
         const dbPokemon = await Pokemon.findOne({
@@ -91,7 +131,6 @@ router.get('/pokemons', async (req, res) => {
         : res.status(404).send('No se encontro dicho pokemon')
     
     } else {
-        const allPokemons = await getAllPokemonNames();
         return res.status(200).send(allPokemons);
     }
 })
@@ -181,6 +220,10 @@ router.delete('/pokemons/:id', async (req, res) => {
         console.log(err);
     };
 });
+
+router.get('/pokemons', async (req, res) => {
+    
+})
 
 
 module.exports = router;

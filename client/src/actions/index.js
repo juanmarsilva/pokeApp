@@ -58,11 +58,17 @@ export function getPokemonDetails(id) {
     };
 };
 
-
-export function filterByTypes(payload) {
-    return {
-        type: 'FILTER_BY_TYPES',
-        payload
+export function filterByTypes(type) {
+    return async function(dispatch) {
+        try {
+            var pokemons = await axios.get('http://localhost:3001/pokemons?type=' + type);
+            return dispatch({
+                type: 'FILTER_BY_TYPES',
+                payload: pokemons.data
+            });
+        } catch (err) {
+            console.log(err);
+        };
     };
 };
 
@@ -87,6 +93,20 @@ export function orderByAttack(payload) {
     };
 };
 
+export function orderByAtt(order) {
+    return async function(dispatch) {
+        try {
+            var pokemonsOrdered = await axios.get('http://localhost:3001/pokemons?order=' + order);
+            return dispatch({
+                type: 'ORDER_POKEMONS',
+                payload: pokemonsOrdered.data
+            })
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
 export function deletePokemon (id) {
     return async function(dispatch) {
         try {
@@ -101,6 +121,5 @@ export function deletePokemon (id) {
         }
     }
 };
-
 
 
