@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700|Nunito:600');
+
+.container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid orange;
+    border-radius: 1rem;
+}
+
+.image {
+    position: relative;
+    bottom: 15%;
+}
+
+.link {
+    text-decoration: none;
+}
+
+h3 {
+    position: relative;
+    bottom: 45%;
+    color: white;
+    font-size: 15px;
+}
+
+.containerTypes {
+    position: relative;
+    display: flex;
+    bottom: 25%;
+}
