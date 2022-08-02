@@ -6,6 +6,9 @@
 
 
 .container {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -47,7 +50,7 @@
     border-radius: 50%;
     overflow: hidden;
     box-shadow: inset -10px 10px 0 10px #ccc;
-    animation: fall .25s ease-in-out,
+    animation: fall 1s ease-in-out,
                shake 1.25s cubic-bezier(.36,.07,.19,.97) 3;
 }
 
@@ -85,4 +88,4 @@
     z-index: 10;
     box-shadow: 0 0 0 10px black;
     animation: blink .5s alternate 7;
-  }
+}

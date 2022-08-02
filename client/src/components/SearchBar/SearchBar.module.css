@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    right: 50%;
+    left: 50%;
+    margin-top: 0.8rem;
+}
+
+input {
+    position: absolute;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 1rem;
+    z-index: 0;
+}
+
+.icon {
+    position: relative;
+    top: 2%;
+    left: 6.5%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1;
+}

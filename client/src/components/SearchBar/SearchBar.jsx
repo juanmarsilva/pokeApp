@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getNamePokemons } from "../../actions";
+import { IoSearchSharp } from 'react-icons/io5';
+import s from './SearchBar.module.css';
 
 export default function SearchBar() {
 
@@ -20,9 +22,9 @@ export default function SearchBar() {
     };
 
     return (
-        <div>
-            <input type='text' placeholder='Buscar..' onChange={(e) => handleInputChange(e)} value={name}/>
-            <button type="submit" onClick={(e) => handleSubmit(e)}>Buscar</button>
+        <div className={s.container}>
+            <IoSearchSharp color="white" className={s.icon} onClick={(e) => handleSubmit(e)}/>
+            <input type='text' placeholder='Search..' onChange={(e) => handleInputChange(e)} value={name} />
         </div>
     )
 }

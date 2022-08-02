@@ -9,6 +9,7 @@ import s from './Home.module.css';
 import Filters from "../Filters/Filters";
 import Orderings from "../Orderings/Orderings";
 import CardsPokemon from "../Cards/CardsPokemon";
+import Loader from "../Loader/Loader";
 
 
 export default function Home() {
@@ -64,17 +65,15 @@ export default function Home() {
 
     return (
         <div>
-            <div>
-                <img src="https://e7.pngegg.com/pngimages/906/122/png-clipart-pokemon-logo-pokemon-logo.png" className={s.image} alt="img not found" />
-            </div>
             <div className={s.container}>
+                <div className={s.pokeball}></div>
                 <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack}/>
                 <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} />
-                <button onClick={e => handleClick(e)}>Recharge Pokemons</button>
+                <button onClick={e => handleClick(e)} className={s.pulse}>Recharge Pokemons</button>
                 <Link to='/pokemons'><button>Create Pokemons</button></Link>
-                <SearchBar />   
             </div>
-            {/* <div>
+            <SearchBar />   
+            <div>
                 <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
             </div>
             <div>
@@ -82,7 +81,7 @@ export default function Home() {
             </div>
             <div>
                 <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
-            </div> */}
+            </div>
         </div>
     )
 
