@@ -23,7 +23,7 @@ export default function SearchBar() {
 
     return (
         <div className={s.container}>
-            <IoSearchSharp color="white" className={s.icon} onClick={(e) => handleSubmit(e)}/>
+            <IoSearchSharp color="white" className={s.icon} onClick={(e) => {handleSubmit(e)}}/>
             <input type='text' placeholder='Search..' onChange={(e) => handleInputChange(e)} value={name} />
         </div>
     )

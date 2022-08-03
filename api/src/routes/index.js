@@ -24,24 +24,27 @@ const getApiInfo = async () => {
 }
 
 const getSpecificPokemonByName = async (name) => {
-    const apiInfo = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
-    let specificPokemon = [];
-    const pokemon = {
-        id: apiInfo.data.id,
-        name: apiInfo.data.name,
-        image: apiInfo.data.sprites["other"]["dream_world"]['front_default'],
-        types: apiInfo.data.types.map(t => t.type.name),
-        attack: apiInfo.data.stats[1]['base_stat'],
-        defense: apiInfo.data.stats[2]['base_stat'],
-        hp: apiInfo.data.stats[0]['base_stat'],
-        speed: apiInfo.data.stats[5]['base_stat'],
-        height: apiInfo.data.height,
-        weight: apiInfo.data.weight,
+    try {
+        const apiInfo = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
+        let specificPokemon = [];
+        const pokemon = {
+            id: apiInfo.data.id,
+            name: apiInfo.data.name,
+            image: apiInfo.data.sprites["other"]["dream_world"]['front_default'],
+            types: apiInfo.data.types.map(t => t.type.name),
+            attack: apiInfo.data.stats[1]['base_stat'],
+            defense: apiInfo.data.stats[2]['base_stat'],
+            hp: apiInfo.data.stats[0]['base_stat'],
+            speed: apiInfo.data.stats[5]['base_stat'],
+            height: apiInfo.data.height,
+            weight: apiInfo.data.weight,
+        }
+        specificPokemon.push(pokemon);
+        return specificPokemon;
+    } catch (err) {
+        return res.json({msg: 'Pokemon not found!'})
     }
-    specificPokemon.push(pokemon);
-    return specificPokemon;
 };
-
 
 const getDbInfo = async () => {
     const dbInfo = await Pokemon.findAll({
@@ -125,10 +128,12 @@ router.get('/pokemons', async (req, res) => {
             return res.status(200).send(arrPokemon)
         }
        
-        const specificPokemon = await getSpecificPokemonByName(name);
-        specificPokemon 
-        ? res.status(200).send(specificPokemon)
-        : res.status(404).send('No se encontro dicho pokemon')
+        try {
+            const specificPokemon = await getSpecificPokemonByName(name);
+            res.status(200).send(specificPokemon)
+        } catch (err) {
+            res.json({msg: 'Pokemon not found!'})
+        }
     
     } else {
         return res.status(200).send(allPokemons);
@@ -193,18 +198,23 @@ router.get('/pokemons/:id', async (req, res) => {
     return res.status(200).send(pokemon); 
 });
 
-router.get('/types', async (req, res) => {
-    const typesApi = await axios.get('https://pokeapi.co/api/v2/type');
-    const pokemonTypes = typesApi.data.results.map(type => type.name);
-    pokemonTypes.forEach(t => {
-        Types.findOrCreate({
-            where: {
-                name: t
-            }
+router.get('/types', (req, res) => {
+    axios.get('https://pokeapi.co/api/v2/type')
+        .then(res => {
+            const pokemonTypes = res.data.results.map(type => type.name);
+            pokemonTypes.forEach(t => {
+                Types.findOrCreate({
+                    where: {
+                        name: t
+                    }
+                })
+            })
+            return pokemonTypes;
         })
-    })
-    const allTypes = await Types.findAll();
-    res.status(200).send(allTypes);
+        .then((allTypes) => {
+            res.status(200).send(allTypes)
+        })
+        .catch(err => console.log(err));
 });
 
 router.delete('/pokemons/:id', async (req, res) => {
@@ -220,10 +230,6 @@ router.delete('/pokemons/:id', async (req, res) => {
         console.log(err);
     };
 });
-
-router.get('/pokemons', async (req, res) => {
-    
-})
 
 
 module.exports = router;

@@ -18,7 +18,7 @@ export default function Filters({handleFilterCreated, handleFilterByTypes, allTy
                     {
                         allTypes?.map(type => {
                             return (
-                                <option value={type.name}> {type.name[0].toUpperCase() + type.name.slice(1)}</option>
+                                <option value={type}> {type[0].toUpperCase() + type.slice(1)}</option>
                             )
                         })
                     }

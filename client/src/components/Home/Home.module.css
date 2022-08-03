@@ -24,6 +24,15 @@ label, button, input {
     border-bottom: 1px solid grey;
 }
 
+.msg {
+    position: absolute;
+    font-size: 30px;
+    top: 50%;
+    right: 40%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 /* selects */
 
 select {

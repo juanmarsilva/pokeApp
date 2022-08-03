@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { getPokemons, getTypes, filterByTypes, filterCreated, orderByName, orderByAttack, orderByAtt } from "../../actions";
+import { getPokemons, getTypes, filterByTypes, filterCreated, orderByName, orderByAttack } from "../../actions";
 import Paginated from "../Paginated/Paginated";
 import SearchBar from "../SearchBar/SearchBar";
 import s from './Home.module.css';
@@ -14,17 +14,18 @@ import Loader from "../Loader/Loader";
 
 export default function Home() {
 
-    const dispatch = useDispatch(); // esto reemplaza el mapDispatchToProps
+    const dispatch = useDispatch(); 
 
-    const allPokemons = useSelector((state) => state.pokemons); // esto es lo mismo que hacer el mapStateToProps()
+    const allPokemons = useSelector((state) => state.pokemons); 
     const allTypes = useSelector((state) => state.types);
 
-    const [ currentPage, setCurrentPage ] = useState(1); // guardamos la pagina actual, y la inicializamos en 1
-    const [ pokemonsPerPage, setPokemonsPerPage ] = useState(12); // guardamos la cantidad de pokemons por pagina
-    const indexOfLastPokemon = currentPage * pokemonsPerPage; // 12 
-    const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage; // 0 
-    const currentPokemons = allPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon); // aca se guardan los pokemons que van a ir en cada pagina
+    const [ currentPage, setCurrentPage ] = useState(1); 
+    const [ pokemonsPerPage, setPokemonsPerPage ] = useState(12);
+    const indexOfLastPokemon = currentPage * pokemonsPerPage; 
+    const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage; 
+    const currentPokemons = !allPokemons.hasOwnProperty('msg') ? allPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon) : [];
     const [ orden, setOrden ] = useState('');
+    const [ loader, setLoader ] = useState(false);
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -39,6 +40,7 @@ export default function Home() {
         e.preventDefault();
         dispatch(getPokemons());
         dispatch(getTypes());
+        changeLoaderState();
     }
 
     function handleFilterByTypes(e) {
@@ -58,28 +60,70 @@ export default function Home() {
 
     function handleOrderByAttack(e) {
         e.preventDefault();
-        dispatch(orderByAtt(e.target.value));
+        dispatch(orderByAttack(e.target.value));
         setCurrentPage(1);
         setOrden(`Ordenado ${e.target.value}`);
+    };
+
+    function changeLoaderState() {
+        setLoader(true);
+        setTimeout(() => {
+            setLoader(false)
+        }, 3000)
+    };
+
+    if(allPokemons.hasOwnProperty('msg')) {
+        return (
+            <div>
+                <div className={s.container}>
+                    <div className={s.pokeball}></div>
+
+                    <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack}/>
+
+                    <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} />
+
+                    <button onClick={e => handleClick(e)} className={s.pulse}>Recharge Pokemons</button>
+
+                    <Link to='/pokemons'><button>Create Pokemons</button></Link>
+                </div>
+                <SearchBar /> 
+                <span className={s.msg}>POKEMON NOT FOUND..</span>
+            </div>
+        )
     }
 
     return (
-        <div>
-            <div className={s.container}>
-                <div className={s.pokeball}></div>
-                <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack}/>
-                <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} />
-                <button onClick={e => handleClick(e)} className={s.pulse}>Recharge Pokemons</button>
-                <Link to='/pokemons'><button>Create Pokemons</button></Link>
-            </div>
-            <SearchBar />   
-            <div>
-                <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
-            </div>
-            <div>
-              <CardsPokemon currentPokemons={currentPokemons}/>
-            </div>
-        </div>
+        <>
+            {
+                loader 
+                ? <Loader />  
+                :   <div>
+                        <div className={s.container}>
+
+                            <div className={s.pokeball}></div>
+
+                            <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack}/>
+
+                            <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} />
+
+                            <button onClick={e => handleClick(e)} className={s.pulse}>Recharge Pokemons</button>
+
+                            <Link to='/pokemons'><button>Create Pokemons</button></Link>
+                        </div>
+
+                        <SearchBar />   
+
+                        <div>
+                            <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
+                        </div>
+                        
+                        <div>
+                            <CardsPokemon currentPokemons={currentPokemons}/> 
+                        </div>
+                    </div>
+            }
+        </>
+            
     )
 
 
