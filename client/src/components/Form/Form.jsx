@@ -8,7 +8,7 @@ export default function Form({handleSelect, handleChange, handleSubmit, handleDe
         <form onSubmit={(e) => handleSubmit(e)} className={s.form}>
             <div className={s.container}>
                 <label>Nombre</label>
-                <input type='text' value={input.name} name='name' onChange={(e) => handleChange(e)} />
+                <input type='text'  name='name' value={input.name} onChange={(e) => handleChange(e)} />
                 {errors?.name}
             </div>
             <div className={s.container}>

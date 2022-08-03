@@ -39,8 +39,8 @@ export default function Home() {
     function handleClick(e) {
         e.preventDefault();
         dispatch(getPokemons());
-        dispatch(getTypes());
-        changeLoaderState();
+        dispatch(getTypes())
+            .then(() => changeLoaderState())
     }
 
     function handleFilterByTypes(e) {
