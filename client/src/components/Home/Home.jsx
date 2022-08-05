@@ -72,26 +72,6 @@ export default function Home() {
         }, 3000)
     };
 
-    // if(allPokemons.hasOwnProperty('msg')) {
-    //     return (
-    //         <div>
-    //             <div className={s.container}>
-    //                 <div className={s.pokeball}></div>
-
-    //                 <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack}/>
-
-    //                 <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} />
-
-    //                 <button onClick={e => handleClick(e)} className={s.pulse}>Recharge Pokemons</button>
-
-    //                 <Link to='/pokemons'><button>Create Pokemons</button></Link>
-    //             </div>
-    //             <SearchBar /> 
-    //             <span className={s.msg}>{allPokemons.msg}</span>
-    //         </div>
-    //     )
-    // }
-
     return (
         <>
             {
@@ -124,7 +104,7 @@ export default function Home() {
                                     <CardsPokemon currentPokemons={currentPokemons} key='cards' /> 
                                 </div>
                         }
-                        
+
                     </div>
             }
         </>
