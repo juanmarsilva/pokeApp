@@ -25,10 +25,39 @@ function rootReducer(state=initialState, {type, payload}) {
         };
     }
 
+    // if(type === FILTER_BY_TYPES) {
+    //     return {
+    //         ...state,
+    //         pokemons: payload
+    //     }
+    // }
+
     if(type === FILTER_BY_TYPES) {
+        const allPokemons = state.allPokemons;
+        const filterPokemons = payload === 'All' ? allPokemons : allPokemons.filter(pokemon => pokemon.types.includes(payload));
+        const pokemonsOfDb = allPokemons.filter(pokemon => pokemon.createdInDb);
+        let filterPokemonsDb = [];
+        let allPokemonsFiltered = [];
+        if(pokemonsOfDb.length) {
+            pokemonsOfDb.forEach(p => {
+                if(payload === 'All') filterPokemonsDb = pokemonsOfDb;
+                if(p.types[0] && p.types[1]) {
+                    if(p.types[0]['name'] === payload || p.types[1]['name'] === payload) filterPokemonsDb.push(p);
+                } else if(p.types[0]) {
+                    if(p.types[0]['name'] === payload) filterPokemonsDb.push(p);
+                };
+            });
+        };
+        if(filterPokemonsDb.length) {
+            allPokemonsFiltered = filterPokemons.concat(filterPokemonsDb);
+            return {
+                ...state,
+                pokemons: allPokemonsFiltered,
+            }
+        };
         return {
             ...state,
-            pokemons: payload
+            pokemons: filterPokemons
         }
     }
 

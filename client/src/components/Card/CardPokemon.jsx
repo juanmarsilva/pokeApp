@@ -5,7 +5,7 @@ import s from'./CardPokemon.module.css';
 export default function CardPokemon({ name, image, types, id}) {
 
     return (
-        <div className={s.container}>
+        <div className={s.container} key={id}>
 
             <img src={image} className={s.image} alt='img not found' width='200px' height='130px' />
 

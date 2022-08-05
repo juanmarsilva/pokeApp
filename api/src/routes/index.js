@@ -86,27 +86,27 @@ router.get('/pokemons', async (req, res) => {
         return res.status(200).send(orderByAttackArr);
     }
 
-    if(type) {
-        const filterPokemons = type === 'All' ? allPokemons : allPokemons.filter(pokemon => pokemon.types.includes(type));
-        const pokemonsOfDb = allPokemons.filter(pokemon => pokemon.createdInDb);
-        let filterPokemonsDb = [];
-        let allPokemonsFiltered = [];
-        if(pokemonsOfDb.length) {
-            pokemonsOfDb.forEach(p => {
-                if(type === 'All') filterPokemonsDb = pokemonsOfDb;
-                if(p.types[0] && p.types[1]) {
-                    if(p.types[0]['name'] === type || p.types[1]['name'] === type) filterPokemonsDb.push(p);
-                } else if(p.types[0]) {
-                    if(p.types[0]['name'] === type) filterPokemonsDb.push(p);
-                };
-            });
-        };
-        if(filterPokemonsDb.length) {
-            allPokemonsFiltered = filterPokemons.concat(filterPokemonsDb);
-            return res.status(200).send(allPokemonsFiltered)
-        };
-        return res.status(200).send(filterPokemons)
-    }
+    // if(type) {
+    //     const filterPokemons = type === 'All' ? allPokemons : allPokemons.filter(pokemon => pokemon.types.includes(type));
+    //     const pokemonsOfDb = allPokemons.filter(pokemon => pokemon.createdInDb);
+    //     let filterPokemonsDb = [];
+    //     let allPokemonsFiltered = [];
+    //     if(pokemonsOfDb.length) {
+    //         pokemonsOfDb.forEach(p => {
+    //             if(type === 'All') filterPokemonsDb = pokemonsOfDb;
+    //             if(p.types[0] && p.types[1]) {
+    //                 if(p.types[0]['name'] === type || p.types[1]['name'] === type) filterPokemonsDb.push(p);
+    //             } else if(p.types[0]) {
+    //                 if(p.types[0]['name'] === type) filterPokemonsDb.push(p);
+    //             };
+    //         });
+    //     };
+    //     if(filterPokemonsDb.length) {
+    //         allPokemonsFiltered = filterPokemons.concat(filterPokemonsDb);
+    //         return res.status(200).send(allPokemonsFiltered)
+    //     };
+    //     return res.status(200).send(filterPokemons)
+    // }
 
     if(name) {
         let arrPokemon = [];

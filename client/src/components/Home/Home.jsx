@@ -37,8 +37,8 @@ export default function Home() {
     }, [dispatch]);
 
     function handleClick(e) {
-        e.preventDefault();
-        dispatch(getPokemons());
+        e.preventDefault()
+        dispatch(getPokemons())
         dispatch(getTypes())
             .then(() => changeLoaderState())
     }
@@ -96,29 +96,29 @@ export default function Home() {
         <>
             {
                 loader 
-                ? <Loader />  
+                ? <Loader key='loader'/>  
                 :   <div>
                         <div className={s.container}>
 
-                            <div className={s.pokeball}></div>
+                            <div className={s.pokeball} key='pokeball'></div>
 
-                            <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack}/>
+                            <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack} key='orderings '/>
 
-                            <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} />
+                            <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} key='filters' />
 
-                            <button onClick={e => handleClick(e)} className={s.pulse}>Recharge Pokemons</button>
+                            <button onClick={e => handleClick(e)} className={s.pulse} key='recharge' >RECHARGE</button>
 
-                            <Link to='/pokemons'><button>Create Pokemons</button></Link>
+                            <Link to='/pokemons'><button key='create' >CREATE</button></Link>
                         </div>
 
-                        <SearchBar />   
+                        <SearchBar key='searchbar' />   
 
                         <div>
-                            <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} />
+                            <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} key='paginated' />
                         </div>
                         
                         <div>
-                            <CardsPokemon currentPokemons={currentPokemons}/> 
+                            <CardsPokemon currentPokemons={currentPokemons} key='cards' /> 
                         </div>
                     </div>
             }

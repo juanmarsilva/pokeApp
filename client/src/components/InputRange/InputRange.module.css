@@ -1,0 +1,25 @@
+.input {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    align-items: center;
+}
+
+span { 
+    grid-area: 1 / 1 / 2 / 2; 
+    font-size: 15px;
+
+}
+
+input { 
+    grid-area: 1 / 2 / 2 / 4; 
+}
+
+.range {
+    border: 1px solid #ced4da;
+    width: 200px;
+}
+

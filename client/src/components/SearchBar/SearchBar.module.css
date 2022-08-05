@@ -9,7 +9,7 @@
     margin-top: 0.8rem;
 }
 
-input {
+.searchInput {
     position: absolute;
     background: transparent;
     border: none;
@@ -17,13 +17,19 @@ input {
     border: 1px solid white;
     border-radius: 1rem;
     z-index: 0;
+    color: white;
+    font-size: 15px;
 }
 
 .icon {
     position: relative;
     top: 2%;
-    left: 4.5%;
+    left: 6.5%;
     font-size: 20px;
     cursor: pointer;
     z-index: 1;
+}
+
+.searchInput:focus {
+    border: none;   
 }

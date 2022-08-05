@@ -1,33 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPokemons, getTypes, postPokemons } from "../../actions";
 import Form from '../Form/Form';
+import s from './CreatePokemon.module.css';
 
 
-const validate = (input) => {
+const validate = (input, boolean) => {
     let errors = {};
+
+    if(boolean === true) {
+        errors.name = 'That Pokemon already exists' 
+    };
     
     if(!input.name) {
-        errors.name = 'Se requiere un nombre!'
+        errors.name = 'A name is required'
     };
 
     if(input.types.length === 0) {
-        errors.types = 'Tienes que seleccionar al menos un tipo';
+        errors.types = 'You have to select at least one type';
     } else if(input.types.length > 2) {
-        errors.types = 'No puedes elegir mas de dos tipos';
+        errors.types = 'You cannot choose more than two types';
     };
 
     if(input.height > 1000) {
-        errors.height = 'Maximo 1000 metros';
+        errors.height = 'Maximum 1000 meters';
     } else if(input.height < 0) {
-        errors.height = 'No se admiten valores negativos!'
+        errors.height = 'Negative values are not allowed'
     }
 
     if(input.weight > 10000) {
-        errors.weight = 'Maximo 10.000Kg';
+        errors.weight = 'Maximum 10,000Kg';
     }  else if(input.weight < 0) {
-        errors.weight = 'No se admiten valores negativos!'
+        errors.weight = 'Negative values are not allowed'
     }
 
     return errors;
@@ -37,7 +42,9 @@ export default function PokemonCreate() {
 
     const dispatch = useDispatch();
     const types = useSelector((state) => state.types);
+    const allPokemons = useSelector((state) => state.allPokemons);
     const history = useHistory();
+
 
     const [ input, setInput ] = useState({
         name: '',
@@ -58,10 +65,11 @@ export default function PokemonCreate() {
             ...input, 
             [e.target.name]: e.target.value
         });
+        const repeatPokemon = allPokemons.find(p => p.name.toLowerCase() === input.name.toLowerCase()) ? true : false
         setErrors(validate({
             ...input,
             [e.target.name]: e.target.value
-        }));
+        }, repeatPokemon));
     };
 
     const handleSelect = (e) => {
@@ -103,15 +111,12 @@ export default function PokemonCreate() {
     }
 
     useEffect(()=> {
+        dispatch(getPokemons());
         dispatch(getTypes());
-    }, []);
+    }, [dispatch]);
 
     return (
-        <div>
-            <Link to='/home'>
-                <button>Volver</button>
-            </Link>
-            <h1>Crea tu Pokemon</h1>
+        <div className={s.container}>
             <Form handleSubmit={handleSubmit} handleChange={handleChange} handleSelect={handleSelect} handleDelete={handleDelete} input={input} types={types} errors={errors} />
         </div>
     )
