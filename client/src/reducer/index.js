@@ -55,6 +55,12 @@ function rootReducer(state=initialState, {type, payload}) {
                 pokemons: allPokemonsFiltered,
             }
         };
+        if(!filterPokemons.length) {
+            return {
+                ...state,
+                pokemons: {msg: `IT WAS NOT FOUND ANY POKEMON OF ${payload.toUpperCase()} TYPE`}
+            }
+        } 
         return {
             ...state,
             pokemons: filterPokemons
@@ -62,14 +68,17 @@ function rootReducer(state=initialState, {type, payload}) {
     }
 
     if(type === FILTER_CREATED) {
-        const allPokemons2 = state.allPokemons;
-        const createdFiltered = payload === 'created' 
-        ? allPokemons2.filter(pokemon => pokemon.createdInDb) 
-        : allPokemons2.filter(pokemon => !pokemon.createdInDb)
+        const pokemonInDb = state.allPokemons.filter(p => p.createdInDb);
+        if(payload === 'created' && !pokemonInDb.length) {
+            return {
+                ...state,
+                pokemons: {msg: 'THERE ARE NO CREATED POKEMONS IN THE DATABASE YET'}
+            }
+        } 
         return {
             ...state,
-            pokemons: payload === 'All' ? allPokemons2 : createdFiltered
-        };
+            pokemons: payload === 'All' ? state.allPokemons : payload === 'created' ? state.allPokemons.filter(p => p.createdInDb) : state.allPokemons.filter(p => !p.createdInDb)
+        }
     }
 
     if(type === ORDER_BY_NAME) {

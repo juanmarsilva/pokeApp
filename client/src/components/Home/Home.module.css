@@ -25,12 +25,11 @@ label, button, input {
 }
 
 .msg {
-    position: absolute;
+    display: flex;
     font-size: 30px;
-    top: 50%;
-    right: 40%;
-    margin-right: auto;
-    margin-left: auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 300px;
 }
 
 /* selects */

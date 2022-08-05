@@ -72,25 +72,25 @@ export default function Home() {
         }, 3000)
     };
 
-    if(allPokemons.hasOwnProperty('msg')) {
-        return (
-            <div>
-                <div className={s.container}>
-                    <div className={s.pokeball}></div>
+    // if(allPokemons.hasOwnProperty('msg')) {
+    //     return (
+    //         <div>
+    //             <div className={s.container}>
+    //                 <div className={s.pokeball}></div>
 
-                    <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack}/>
+    //                 <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack}/>
 
-                    <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} />
+    //                 <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} />
 
-                    <button onClick={e => handleClick(e)} className={s.pulse}>Recharge Pokemons</button>
+    //                 <button onClick={e => handleClick(e)} className={s.pulse}>Recharge Pokemons</button>
 
-                    <Link to='/pokemons'><button>Create Pokemons</button></Link>
-                </div>
-                <SearchBar /> 
-                <span className={s.msg}>POKEMON NOT FOUND..</span>
-            </div>
-        )
-    }
+    //                 <Link to='/pokemons'><button>Create Pokemons</button></Link>
+    //             </div>
+    //             <SearchBar /> 
+    //             <span className={s.msg}>{allPokemons.msg}</span>
+    //         </div>
+    //     )
+    // }
 
     return (
         <>
@@ -117,9 +117,14 @@ export default function Home() {
                             <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} key='paginated' />
                         </div>
                         
-                        <div>
-                            <CardsPokemon currentPokemons={currentPokemons} key='cards' /> 
-                        </div>
+                        {
+                            allPokemons.hasOwnProperty('msg') 
+                                ? <span className={s.msg}>{allPokemons.msg}</span> 
+                                : <div>
+                                    <CardsPokemon currentPokemons={currentPokemons} key='cards' /> 
+                                </div>
+                        }
+                        
                     </div>
             }
         </>

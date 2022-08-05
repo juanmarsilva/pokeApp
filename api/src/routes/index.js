@@ -5,6 +5,8 @@ const { Op } = require('sequelize');
 
 const router = Router();
 
+// Functions
+
 const getApiInfo = async () => {
 
     const apiInfo = await axios.get('https://pokeapi.co/api/v2/pokemon/');
@@ -44,6 +46,7 @@ const getSpecificPokemonByName = async (name) => {
     } catch (err) {
         return res.json({msg: 'Pokemon not found!'})
     }
+
 };
 
 const getDbInfo = async () => {
@@ -65,6 +68,8 @@ const getAllPokemonNames = async () => {
     const infoTotal = apiInfo.concat(dbInfo);
     return infoTotal;
 };
+
+// Routes
 
 router.get('/pokemons', async (req, res) => {
     const { name, type, order } = req.query;
@@ -132,7 +137,7 @@ router.get('/pokemons', async (req, res) => {
             const specificPokemon = await getSpecificPokemonByName(name);
             res.status(200).send(specificPokemon)
         } catch (err) {
-            res.json({msg: 'Pokemon not found!'})
+            res.json({msg: 'POKEMON NOT FOUND..'});
         }
     
     } else {
@@ -198,6 +203,30 @@ router.get('/pokemons/:id', async (req, res) => {
     return res.status(200).send(pokemon); 
 });
 
+router.delete('/pokemons/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletePokemon = await Pokemon.destroy({
+            where: {
+                id: id
+            }
+        });
+        return res.status(200).json('Pokemon eliminado correctamente!');
+    } catch(err) {
+        console.log(err);
+    };
+});
+
+// router.put('/pokemons/:id',  (req, res) => {
+//     const { id } = req.params;
+//     const { name, hp, attack, defense, speed, weight, height, image } = req.body;
+//     if(!name) return res.status(404).json({msg: 'Name no puede ser nulo!'})
+//     Pokemon.findByPk(id)
+//         .then(pokemon => pokemon.update({name, hp, attack, defense, speed, weight, height, image}))
+//         .then(pokemon => res.json(pokemon))
+//         .catch(err => console.log(err)); 
+// });
+
 router.get('/types', (req, res) => {
     axios.get('https://pokeapi.co/api/v2/type')
         .then(res => {
@@ -217,19 +246,7 @@ router.get('/types', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.delete('/pokemons/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deletePokemon = await Pokemon.destroy({
-            where: {
-                id: id
-            }
-        });
-        return res.status(200).json('Pokemon eliminado correctamente!');
-    } catch(err) {
-        console.log(err);
-    };
-});
+
 
 
 module.exports = router;
