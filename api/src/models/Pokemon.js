@@ -33,10 +33,16 @@ module.exports = (sequelize) => {
     height: {
       type: DataTypes.FLOAT,
       allowNull: true,
+      get() {
+        return this.getDataValue('height') + 'm'
+      }
     },
     weight: {
       type: DataTypes.FLOAT,
       allowNull: true,
+      get() {
+        return this.getDataValue('weight') + 'Kg'
+      }
     },
     image: {
       type: DataTypes.STRING,

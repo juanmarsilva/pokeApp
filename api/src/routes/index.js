@@ -76,20 +76,20 @@ router.get('/pokemons', async (req, res) => {
     
     const allPokemons = await getAllPokemonNames();
     
-    if(order) {
-        let orderByAttackArr = order === 'asc' ?
-                allPokemons.sort((a, b) => {
-                    if(a.attack > b.attack) return 1;
-                    if(b.attack > a.attack) return -1;
-                    return 0;
-                }) : 
-                allPokemons.sort((a, b) => {
-                    if(a.attack > b.attack) return -1;
-                    if(b.attack > a.attack) return 1;
-                    return 0;
-                });
-        return res.status(200).send(orderByAttackArr);
-    }
+    // if(order) {
+    //     let orderByAttackArr = order === 'asc' ?
+    //             allPokemons.sort((a, b) => {
+    //                 if(a.attack > b.attack) return 1;
+    //                 if(b.attack > a.attack) return -1;
+    //                 return 0;
+    //             }) : 
+    //             allPokemons.sort((a, b) => {
+    //                 if(a.attack > b.attack) return -1;
+    //                 if(b.attack > a.attack) return 1;
+    //                 return 0;
+    //             });
+    //     return res.status(200).send(orderByAttackArr);
+    // }
 
     // if(type) {
     //     const filterPokemons = type === 'All' ? allPokemons : allPokemons.filter(pokemon => pokemon.types.includes(type));

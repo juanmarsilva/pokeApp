@@ -1,0 +1,196 @@
+.container {
+    position: absolute;
+    right: 30%;
+    top: 5%;
+    display: grid;
+    width: 800px;
+    height: 800px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    align-items: center;
+    justify-items: center;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.1)
+    );
+    backdrop-filter: blur(21px);
+    -webkit-backdrop-filter: blur(21px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 24px;
+    padding: 48px;
+}
+
+
+.name { grid-area: 1 / 2 / 2 / 6; }
+.image { grid-area: 2 / 1 / 4 / 3; }
+
+.types { 
+    grid-area: 4 / 1 / 5 / 3;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerTypes {
+    width: 100px;
+    border: 1px solid white;
+    padding: 8px 5px 10px 5px;
+    margin: 0 10px 0 10px;
+    border-radius: 0.5rem;
+}
+
+.height { 
+    grid-area: 5 / 1 / 6 / 2; 
+    margin-left: 20px;
+}
+
+.height, .hp, .attack, .defense, .speed, .weight {
+    display: flex;
+    flex-direction: column;
+}
+
+.weight { 
+    grid-area: 5 / 2 / 6 / 3; 
+    margin-right: 50px;
+}
+
+.hp { grid-area: 2 / 4 / 3 / 5; }
+
+.inputHp { grid-area: 2 / 5 / 3 / 7; }
+
+.attack { grid-area: 3 / 4 / 4 / 5; }
+
+.inputAttack { grid-area: 3 / 5 / 4 / 7; }
+
+.defense { grid-area: 4 / 4 / 5 / 5; }
+
+.inputDefense { grid-area: 4 / 5 / 5 / 7; }
+
+.speed { grid-area: 5 / 4 / 6 / 5; }
+
+.inputSpeed { grid-area: 5 / 5 / 6 / 7; }
+
+.id { 
+    grid-area: 1 / 6 / 2 / 7; 
+    margin-bottom: 20px;
+}
+
+.spanId {
+    font-size: 20px;
+}
+
+.created {
+    grid-area: 1 / 6 / 2 / 7; 
+    border: 2px solid green;
+    height: 40px;
+    width: 80px;
+    border-radius: 0.5rem;
+    margin-bottom: 20px;
+}
+
+.deleteBtn { 
+    grid-area: 6 / 2 / 7 / 3; 
+    position: relative;
+    left: 60%;
+    border: 1px solid red;
+    color: white;
+}
+
+.returnBtn { 
+    grid-area: 6 / 5 / 7 / 6;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+}
+
+span {
+    font-size: 11.5px;
+    color: white;
+}
+
+h2 {
+    font-size: 35px;
+    color: white;
+    margin-top: 5px;
+}
+
+hr {
+    width: 67px;
+}
+
+.grass {
+    border: 2px solid green;
+}
+
+.fire {
+    border: 2px solid orange;
+}
+
+.electric {
+    border: 2px solid yellow;
+}
+
+.normal {
+    border: 2px solid white;
+}
+
+.poison {
+    border: 2px solid rgb(236, 14, 236);
+}
+
+.water {
+    border: 2px solid blue;
+}
+
+.flying {
+    border: 2px solid cornflowerblue;
+}
+
+.bug {
+    border: 2px solid greenyellow;
+}
+
+.fighting {
+    border: 2px solid orangered;
+}
+
+.ground {
+    border: 2px solid brown;
+}
+
+.rock {
+    border: 2px solid rgb(117, 24, 24);
+}
+
+.ghost {
+    border: 2px solid rgb(88, 4, 88);
+}
+
+.steel {
+    border: 2px solid rgb(95, 95, 95);
+}
+
+.psychic {
+    border: 2px solid rgb(240, 145, 240);
+}
+
+.ice {
+    border: 2px solid rgb(134, 171, 240);
+}
+
+.dragon {
+    border: 2px solid rgb(153, 7, 153);
+}
+
+.dark {
+    border: 2px solid rgb(70, 14, 14)
+}
+
+.fairy {
+    border: 2px solid rgb(230, 107, 230);
+}
+

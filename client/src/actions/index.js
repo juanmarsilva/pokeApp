@@ -105,19 +105,27 @@ export function orderByName(payload) {
 };
 
 
-export function orderByAttack(order) {
-    return async function(dispatch) {
-        try {
-            var pokemonsOrdered = await axios.get('http://localhost:3001/pokemons?order=' + order);
-            return dispatch({
-                type: ORDER_BY_ATTACK,
-                payload: pokemonsOrdered.data
-            })
-        } catch (err) {
-            console.log(err); 
-        }
-    }
-}
+// export function orderByAttack(order) {
+//     return async function(dispatch) {
+//         try {
+//             var pokemonsOrdered = await axios.get('http://localhost:3001/pokemons?order=' + order);
+//             return dispatch({
+//                 type: ORDER_BY_ATTACK,
+//                 payload: pokemonsOrdered.data
+//             })
+//         } catch (err) {
+//             console.log(err); 
+//         }
+//     }
+// }
+
+export function orderByAttack(payload) {
+    return {
+        type: ORDER_BY_ATTACK,
+        payload
+    };
+};
+
 
 export function deletePokemon (id) {
     return async function(dispatch) {

@@ -100,11 +100,29 @@ function rootReducer(state=initialState, {type, payload}) {
     }
 
     if(type === ORDER_BY_ATTACK) {
+        let orderByAttackArr = payload === 'asc' ?
+                state.pokemons.sort((a, b) => {
+                    if(a.attack > b.attack) return 1;
+                    if(b.attack > a.attack) return -1;
+                    return 0;
+                }) : 
+                state.pokemons.sort((a, b) => {
+                    if(a.attack > b.attack) return -1;
+                    if(b.attack > a.attack) return 1;
+                    return 0;
+                });
         return {
             ...state,
-            pokemons: payload,
+            pokemons: orderByAttackArr
         }
     }
+
+    // if(type === ORDER_BY_ATTACK) {
+    //     return {
+    //         ...state,
+    //         pokemons: payload,
+    //     }
+    // }
 
     if(type === GET_NAME_POKEMONS) {
         return {
