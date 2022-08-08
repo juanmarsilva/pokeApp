@@ -102,9 +102,7 @@ export default function PokemonDetails() {
             
             {
                 pokemonDetail[0].hasOwnProperty('createdInDb') 
-                    ? <div className={s.deleteBtn} >
-                        <button onClick={(e) => handleDeletePokemon(pokemonDetail[0]['id'], e)}>DELETE</button> 
-                      </div>
+                    ? <button className={s.deleteBtn} onClick={(e) => handleDeletePokemon(pokemonDetail[0]['id'], e)}>DELETE</button> 
                     : <></>
             }
             

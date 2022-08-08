@@ -13,13 +13,23 @@ export const DELETE_POKEMON = 'DELETE_POKEMON';
 
 
 export function getPokemons() {
-    return async (dispatch) => {
-        var json = await axios.get('http://localhost:3001/pokemons/');
-        return dispatch({
-            type: GET_POKEMONS,
-            payload: json.data,
-        });
+    return (dispatch) => {
+        axios.get('http://localhost:3001/pokemons/')
+            .then((json) => {
+                return dispatch({
+                    type: GET_POKEMONS,
+                    payload: json.data,
+                })
+            })
+            .catch(err => console.log(err)); 
     };
+    // return async (dispatch) => {
+    //     var json = await axios.get('http://localhost:3001/pokemons/')
+    //     return dispatch({
+    //         type: GET_POKEMONS,
+    //         payload: json.data,
+    //     });
+    // };
 };
 
 
@@ -47,13 +57,17 @@ export function postPokemons(payload) {
 
 export function getTypes() {
     return async (dispatch) => {
-        var types = await axios.get('http://localhost:3001/types');
-        return dispatch({
-            type: GET_TYPES,
-            payload: types.data
-        });
-    };
-};
+        try {
+            var types = await axios.get('http://localhost:3001/types')
+            return dispatch({
+                type: GET_TYPES,
+                payload: types.data
+            })
+        } catch(err) {
+            console.log(err)
+        }
+    }
+}
 
 
 export function getPokemonDetails(id) {

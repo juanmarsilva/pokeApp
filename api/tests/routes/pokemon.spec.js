@@ -19,14 +19,14 @@ describe('Pokemon routes', () => {
   beforeEach(() => Pokemon.sync({ force: true })
     .then(() => Pokemon.create(pokemon)));
   
-  xdescribe('GET /pokemons', () => {
+  describe('GET /pokemons', () => {
     it('should get 200', (done) => {
       agent.get('/pokemons').expect(200)
       done();
     }).timeout(5000);
   });
   
-  xdescribe('POST /pokemons', () => {
+  describe('POST /pokemons', () => {
     it("POST agrega un nuevo pokemon", function () {
       agent.post("/pokemons")
       .send(pokemon)
@@ -34,7 +34,7 @@ describe('Pokemon routes', () => {
     })
   });
   
-  xdescribe('GET /types', () => {
+  describe('GET /types', () => {
     it("Tiene estado 200", function () {
       agent.get("/types")
       .send(pokemon)

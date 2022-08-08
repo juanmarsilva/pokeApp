@@ -5,8 +5,9 @@ const { Op } = require('sequelize');
 
 const router = Router();
 
-// Functions
+// Controllers
 
+// Me traigo los 40 primeros pokemons de la API.
 const getApiInfo = async () => {
 
     const apiInfo = await axios.get('https://pokeapi.co/api/v2/pokemon/');
@@ -25,6 +26,7 @@ const getApiInfo = async () => {
     return allPokemons;
 }
 
+// Me trae un Pokemon en especifico de la API, con sus respectivos datos.
 const getSpecificPokemonByName = async (name) => {
     try {
         const apiInfo = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
@@ -49,6 +51,7 @@ const getSpecificPokemonByName = async (name) => {
 
 };
 
+// Me trae la informacion de la base de datos, todos los Pokemons.
 const getDbInfo = async () => {
     const dbInfo = await Pokemon.findAll({
         include: {
@@ -62,6 +65,7 @@ const getDbInfo = async () => {
     return dbInfo;
 };
 
+// Concatena la informacion de la API con la de la base de datos
 const getAllPokemonNames = async () => {
     const apiInfo = await getApiInfo();
     const dbInfo = await getDbInfo();
@@ -71,6 +75,7 @@ const getAllPokemonNames = async () => {
 
 // Routes
 
+// Ruta para mostrar los pokemons, tambien podriamos filtrarlos y ordenarlos desde aqui si quisieramos.
 router.get('/pokemons', async (req, res) => {
     const { name, type, order } = req.query;
     
@@ -145,7 +150,7 @@ router.get('/pokemons', async (req, res) => {
     }
 })
 
-
+// Ruta para crear los Pokemons
 router.post('/pokemons', async (req, res) => {
     const { name, hp, attack, defense, speed, height, weight, createdInDb, types, image} = req.body;
     if(!name) throw new Error('Faltan datos obligatorios!') 
@@ -177,6 +182,7 @@ router.post('/pokemons', async (req, res) => {
     };
 });
 
+// Ruta para mostrarme el detalle de los pokemons
 router.get('/pokemons/:id', async (req, res) => {
     const { id } = req.params;
     if(id.length > 5) {
@@ -203,20 +209,17 @@ router.get('/pokemons/:id', async (req, res) => {
     return res.status(200).send(pokemon); 
 });
 
+
+// Ruta para eliminar los pokemons de la DB
 router.delete('/pokemons/:id', async (req, res) => {
     const { id } = req.params;
-    try {
-        const deletePokemon = await Pokemon.destroy({
-            where: {
-                id: id
-            }
-        });
-        return res.status(200).json('Pokemon eliminado correctamente!');
-    } catch(err) {
-        console.log(err);
-    };
+    Pokemon.findByPk(id)
+        .then(pokemon => pokemon.destroy())
+        .then(r => res.json('Pokemon eliminado correctamente!'))
+        .catch(err => console.log(err));
 });
 
+// Ruta para editar los pokemons de la DB
 // router.put('/pokemons/:id',  (req, res) => {
 //     const { id } = req.params;
 //     const { name, hp, attack, defense, speed, weight, height, image } = req.body;
@@ -227,6 +230,7 @@ router.delete('/pokemons/:id', async (req, res) => {
 //         .catch(err => console.log(err)); 
 // });
 
+// Ruta para traerme los tipos de Pokemons y almacenar esos tipos en la base de datos.
 router.get('/types', (req, res) => {
     axios.get('https://pokeapi.co/api/v2/type')
         .then(res => {
