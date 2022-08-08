@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { deletePokemon, getPokemonDetails, getPokemons } from "../../actions";
+import { deletePokemon, getPokemons } from "../../actions";
 import axios from "axios";
 import Loader from "../Loader/Loader";
 import s from './PokemonDetails.module.css';
+import Form from "../Form/Form";
+
 
 export default function PokemonDetails() {
 
@@ -12,6 +14,9 @@ export default function PokemonDetails() {
     const history = useHistory();
     const { id } = useParams();
     const [ pokemonDetail, setPokemonDetail ] = useState(undefined);
+    
+
+
 
     useEffect( async () => {
         // dispatch(getPokemonDetails(props.match.params.id));
@@ -19,20 +24,20 @@ export default function PokemonDetails() {
         setPokemonDetail(json.data);
     }, []);
 
-    const handleDelete = (id, e) => {
+    const handleDeletePokemon = (id, e) => {
         e.preventDefault();
         dispatch(deletePokemon(id));
         alert('Pokemon eliminado correctamente');
         history.push('/home');
         dispatch(getPokemons());
     };
-
+    
     if(!pokemonDetail) {
         return <Loader />
     }
 
-
     return (
+    
         <div className={s.container}>
 
             <h2 className={s.name}>{pokemonDetail[0]['name'].toUpperCase()}</h2>
@@ -62,8 +67,7 @@ export default function PokemonDetails() {
                     : <span>{pokemonDetail[0]['weight']/10}Kg</span>
                 }
             </div>
-           
-
+        
             <div className={s.hp}>
                 <span >HP</span>
                 <span>{pokemonDetail[0]['hp']}</span>
@@ -96,12 +100,18 @@ export default function PokemonDetails() {
             }
 
             
-            {pokemonDetail[0].hasOwnProperty('createdInDb') ? <button className={s.deleteBtn} onClick={(e) => handleDelete(pokemonDetail[0]['id'], e)}>DELETE</button> : <></>}
+            {
+                pokemonDetail[0].hasOwnProperty('createdInDb') 
+                    ? <div className={s.deleteBtn} >
+                        <button onClick={(e) => handleDeletePokemon(pokemonDetail[0]['id'], e)}>DELETE</button> 
+                      </div>
+                    : <></>
+            }
             
             <Link to='/home'>
                 <button className={s.returnBtn}>RETURN</button>
             </Link>
-
         </div>
+        
     )
 }

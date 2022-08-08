@@ -11,6 +11,7 @@ export const ORDER_BY_ATTACK = 'ORDER_BY_ATTACK';
 export const GET_POKEMON_DETAILS = 'GET_POKEMON_DETAILS';
 export const DELETE_POKEMON = 'DELETE_POKEMON';
 
+
 export function getPokemons() {
     return async (dispatch) => {
         var json = await axios.get('http://localhost:3001/pokemons/');
@@ -131,7 +132,6 @@ export function deletePokemon (id) {
     return async function(dispatch) {
         try {
             var json = await axios.delete(`http://localhost:3001/pokemons/${id}`);
-            console.log(json.data);
             return dispatch({
                 type: DELETE_POKEMON,
                 payload: json.data
@@ -141,5 +141,6 @@ export function deletePokemon (id) {
         }
     }
 };
+
 
 
