@@ -32,7 +32,6 @@ export function getNamePokemons (name) {
         try {
             // var json = await axios.get('http://localhost:3001/pokemons?name=' + name);
             var json = await axios.get('/pokemons?name=' + name);
-            console.log(json.data);
             return dispatch({
                 type: GET_NAME_POKEMONS,
                 payload: json.data
