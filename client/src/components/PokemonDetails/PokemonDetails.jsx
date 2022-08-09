@@ -7,6 +7,7 @@ import Loader from "../Loader/Loader";
 import s from './PokemonDetails.module.css';
 
 
+
 export default function PokemonDetails() {
 
     const dispatch = useDispatch();
@@ -15,11 +16,10 @@ export default function PokemonDetails() {
     const [ pokemonDetail, setPokemonDetail ] = useState(undefined);
     
 
-
-
     useEffect( async () => {
         // dispatch(getPokemonDetails(props.match.params.id));
         var json = await axios.get('/pokemons/' + id);
+        console.log(json.data);
         setPokemonDetail(json.data);
     }, []);
 
