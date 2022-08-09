@@ -185,6 +185,7 @@ router.post('/pokemons', async (req, res) => {
 // Ruta para mostrarme el detalle de los pokemons
 router.get('/pokemons/:id', async (req, res) => {
     const { id } = req.params;
+    console.log(id);
     if(id.length > 5) {
         let arrPokemon = [];
         const dbPokemon = await Pokemon.findOne({
