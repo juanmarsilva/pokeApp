@@ -19,7 +19,6 @@ export default function PokemonDetails() {
     useEffect( async () => {
         // dispatch(getPokemonDetails(props.match.params.id));
         var json = await axios.get('/pokemons/' + id);
-        console.log(json.data);
         setPokemonDetail(json.data);
     }, []);
 
