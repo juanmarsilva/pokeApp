@@ -36,12 +36,7 @@ export function getNamePokemons (name) {
                 name: json.data.name,
                 image: json.data.sprites["other"]["dream_world"]['front_default'],
                 types: json.data.types.map(t => t.type.name),
-                attack: json.data.stats[1]['base_stat'],
-                defense: json.data.stats[2]['base_stat'],
-                hp: json.data.stats[0]['base_stat'],
-                speed: json.data.stats[5]['base_stat'],
-                height: json.data.height,
-                weight: json.data.weight,
+                attack: json.data.stats[1]['base_stat']
             }
             specificPokemon.push(pokemon);
             return dispatch({
@@ -60,11 +55,12 @@ export function getNamePokemons (name) {
             }
         }
     };
+    
 };
 
 
 export function postPokemons(payload) {
-    return async function(dispatch) {
+    return async function() {
         const response = await axios.post('/pokemons', payload);
         return response;
     }

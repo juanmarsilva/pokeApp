@@ -124,7 +124,7 @@ function rootReducer(state=initialState, {type, payload}) {
     //     }
     // }
 
-    if(type === GET_NAME_POKEMONS) {
+    if(type === GET_NAME_POKEMONS) {      
        return {
             ...state,
             pokemons: payload
