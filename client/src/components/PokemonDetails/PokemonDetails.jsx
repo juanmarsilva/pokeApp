@@ -5,7 +5,6 @@ import { deletePokemon, getPokemons } from "../../actions";
 import axios from "axios";
 import Loader from "../Loader/Loader";
 import s from './PokemonDetails.module.css';
-import Form from "../Form/Form";
 
 
 export default function PokemonDetails() {
@@ -20,7 +19,7 @@ export default function PokemonDetails() {
 
     useEffect( async () => {
         // dispatch(getPokemonDetails(props.match.params.id));
-        var json = await axios.get('http://localhost:3001/pokemons/' + id);
+        var json = await axios.get('/pokemons/' + id);
         setPokemonDetail(json.data);
     }, []);
 
