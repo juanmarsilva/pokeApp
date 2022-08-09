@@ -36,7 +36,7 @@ export default function PokemonDetails() {
 
     return (
     
-        <div className={s.container}>
+        <div className={!pokemonDetail[0].hasOwnProperty('createdInDb') ? `${s.container} ${s.api}` : s.container}>
 
             <h2 className={s.name}>{pokemonDetail[0]['name'].toUpperCase()}</h2>
             

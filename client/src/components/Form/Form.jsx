@@ -55,7 +55,7 @@ export default function Form({handleSelect, handleChange, handleSubmit, handleDe
                     <label>SELECT TYPES:</label>
                 </div>
 
-                <div className={s.selectTypes}>
+                <div className={!errors.types ? s.selectTypes : `${s.selectTypes} ${s.inputError}`}>
                     <select onChange={(e) => handleSelect(e)} disabled={input.types.length === 2 ? true : false}>
                         {
                             types?.map(type => {

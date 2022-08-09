@@ -24,6 +24,10 @@
     padding: 48px;
 }
 
+.api {
+    padding-top: 140px;
+}
+
 
 .name { grid-area: 1 / 2 / 2 / 6; }
 .image { grid-area: 2 / 1 / 4 / 3; }
