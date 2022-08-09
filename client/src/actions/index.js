@@ -30,15 +30,46 @@ export function getPokemons() {
 export function getNamePokemons (name) {
     return async function(dispatch) {
         try {
-            // var json = await axios.get('http://localhost:3001/pokemons?name=' + name);
-            var json = await axios.get('/pokemons?name=' + name);
+            var json = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
+            let specificPokemon = [];
+            const pokemon = {
+                id: json.data.id,
+                name: json.data.name,
+                image: json.data.sprites["other"]["dream_world"]['front_default'],
+                types: json.data.types.map(t => t.type.name),
+                attack: json.data.stats[1]['base_stat'],
+                defense: json.data.stats[2]['base_stat'],
+                hp: json.data.stats[0]['base_stat'],
+                speed: json.data.stats[5]['base_stat'],
+                height: json.data.height,
+                weight: json.data.weight,
+            }
+            specificPokemon.push(pokemon);
             return dispatch({
                 type: GET_NAME_POKEMONS,
-                payload: json.data
-            });
-        } catch(err) {
-            console.log(err);
-        };
+                payload: specificPokemon
+            })
+        } finally {
+            try {
+                var json = await axios.get('/pokemons?name=' + name);
+                return dispatch({
+                    type: GET_NAME_POKEMONS,
+                    payload: json.data
+                });
+            } catch(err) {
+                console.log(err);
+            }
+        }
+        // try {
+        //     // var json = await axios.get('http://localhost:3001/pokemons?name=' + name);
+        //     var json = await axios.get('/pokemons?name=' + name);
+        //     return dispatch({
+        //         type: GET_NAME_POKEMONS,
+        //         payload: json.data
+        //     });
+        // } catch(err) {
+        //     console.log(err);
+        // };
     };
 };
 

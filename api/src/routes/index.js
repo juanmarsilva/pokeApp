@@ -77,6 +77,8 @@ const getAllPokemonNames = async () => {
 
 // Ruta para mostrar los pokemons, tambien podriamos filtrarlos y ordenarlos desde aqui si quisieramos.
 router.get('/pokemons', async (req, res) => {
+
+
     const { name, type, order } = req.query;
     
     const allPokemons = await getAllPokemonNames();
@@ -137,7 +139,7 @@ router.get('/pokemons', async (req, res) => {
             arrPokemon.push(dbPokemon);
             return res.status(200).send(arrPokemon)
         }
-       
+        
         try {
             const specificPokemon = await getSpecificPokemonByName(name);
             res.status(200).send(specificPokemon)

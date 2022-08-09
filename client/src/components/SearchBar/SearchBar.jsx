@@ -7,7 +7,6 @@ import s from './SearchBar.module.css';
 export default function SearchBar() {
 
     const dispatch = useDispatch();
-
     const [ name, setName ] = useState('');
 
     function handleInputChange(e) {
@@ -19,7 +18,6 @@ export default function SearchBar() {
         e.preventDefault();
         dispatch(getNamePokemons(name));
         setName('');
-        
     };
 
     return (
