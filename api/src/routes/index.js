@@ -46,7 +46,7 @@ const getSpecificPokemonByName = async (name) => {
         specificPokemon.push(pokemon);
         return specificPokemon;
     } catch (err) {
-        console.log(err)
+        return {msg: 'POKEMON NOT FOUND...'}
     }
 
 };
