@@ -215,8 +215,12 @@ router.get('/pokemons/:id', async (req, res) => {
 router.delete('/pokemons/:id', async (req, res) => {
     const { id } = req.params;
     Pokemon.findByPk(id)
+        .then(pokemon => {
+            pokemon.removeTypes()
+            return pokemon;
+        })
         .then(pokemon => pokemon.destroy())
-        .then(r => res.json('Pokemon eliminado correctamente!'))
+        .then(r => res.status(200).send('Pokemon eliminado correctamente!'))
         .catch(err => console.log(err));
 });
 
