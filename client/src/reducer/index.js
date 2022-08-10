@@ -1,4 +1,4 @@
-import { GET_NAME_POKEMONS, GET_POKEMONS, GET_POKEMON_DETAILS, GET_TYPES, POST_POKEMON, DELETE_POKEMON, FILTER_BY_TYPES, FILTER_CREATED, ORDER_BY_ATTACK, ORDER_BY_NAME } from '../actions/index'
+import { GET_NAME_POKEMONS, GET_POKEMONS, GET_POKEMON_DETAILS, GET_TYPES, POST_POKEMON, DELETE_POKEMON, FILTER_BY_TYPES, FILTER_CREATED, ORDER_BY_ATTACK, ORDER_BY_NAME, EDIT_POKEMON } from '../actions/index'
 
 const initialState = {
     pokemons: [],
@@ -150,6 +150,11 @@ function rootReducer(state=initialState, {type, payload}) {
         };
     }
 
+    if(type === EDIT_POKEMON) {
+        return {
+            ...state
+        }
+    }
 
     return state;
 }

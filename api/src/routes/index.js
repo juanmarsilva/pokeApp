@@ -225,15 +225,34 @@ router.delete('/pokemons/:id', async (req, res) => {
 });
 
 // Ruta para editar los pokemons de la DB
-// router.put('/pokemons/:id',  (req, res) => {
-//     const { id } = req.params;
-//     const { name, hp, attack, defense, speed, weight, height, image } = req.body;
-//     if(!name) return res.status(404).json({msg: 'Name no puede ser nulo!'})
-//     Pokemon.findByPk(id)
-//         .then(pokemon => pokemon.update({name, hp, attack, defense, speed, weight, height, image}))
-//         .then(pokemon => res.json(pokemon))
-//         .catch(err => console.log(err)); 
-// });
+router.put('/pokemons/:id',  async (req, res) => {
+    const { id } = req.params;
+    const { name, hp, attack, defense, speed, weight, height, image, types } = req.body;
+    if(!name) return res.status(404).json({msg: 'Name no puede ser nulo!'})
+    const typesInDb = await Types.findAll({
+        where: {
+            name: {
+                [Op.or]: [types]
+            }
+        }
+    });
+    Pokemon.findByPk(id, {
+        include: {
+            model: Types,
+            attributes: ['name'],
+            through: {
+                attributes: [],
+            },
+        },
+    })
+        .then(pokemon => {
+            pokemon.update({name, hp, attack, defense, speed, weight, height, image})
+            return pokemon;
+        })
+        .then(pokemon => pokemon.setTypes(typesInDb))
+        .then(() => res.send('Pokemon editado correctamente!'))
+        .catch(err => console.log(err)); 
+});
 
 // Ruta para traerme los tipos de Pokemons y almacenar esos tipos en la base de datos.
 router.get('/types', (req, res) => {

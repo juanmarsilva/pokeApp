@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { deletePokemon, getPokemons } from "../../actions";
+import { deletePokemon, getPokemons, getTypes } from "../../actions";
 import axios from "axios";
 import Loader from "../Loader/Loader";
 import s from './PokemonDetails.module.css';
+import EditPokemon from "../EditPokemon/EditPokemon";
 
 
 
@@ -14,11 +15,13 @@ export default function PokemonDetails() {
     const history = useHistory();
     const { id } = useParams();
     const [ pokemonDetail, setPokemonDetail ] = useState(undefined);
+    const [ edit, setEdit ] = useState(false);
     
 
     useEffect(async () => {
         var json = await axios.get('/pokemons/' + id);
         setPokemonDetail(json.data);
+        dispatch(getTypes());
     }, []);
 
     const handleDeletePokemon = (id, e) => {
@@ -28,12 +31,19 @@ export default function PokemonDetails() {
         history.push('/home');
         dispatch(getPokemons());
     };
+
+    const handleEdit = (e) => {
+        e.preventDefault();
+        setEdit(true);
+    }
     
     if(!pokemonDetail) {
         return <Loader />
     }
 
     return (
+
+        edit ? <EditPokemon id={pokemonDetail[0]['id']} /> :
     
         <div className={!pokemonDetail[0].hasOwnProperty('createdInDb') ? `${s.container} ${s.api}` : s.container}>
 
@@ -99,13 +109,17 @@ export default function PokemonDetails() {
             
             {
                 pokemonDetail[0].hasOwnProperty('createdInDb') 
-                    ? <button className={s.deleteBtn} onClick={(e) => handleDeletePokemon(pokemonDetail[0]['id'], e)}>DELETE</button> 
+                    ? <div className={s.buttons}>
+                         <button className={s.editBtn} onClick={(e) => handleEdit(e)}>EDIT</button>
+                         <button className={s.deleteBtn} onClick={(e) => handleDeletePokemon(pokemonDetail[0]['id'], e)}>DELETE</button> 
+                      </div>
                     : <></>
             }
             
             <Link to='/home'>
                 <button className={s.returnBtn}>RETURN</button>
             </Link>
+
         </div>
         
     )

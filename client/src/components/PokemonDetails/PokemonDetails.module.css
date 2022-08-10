@@ -97,12 +97,19 @@
     margin-bottom: 20px;
 }
 
-.deleteBtn { 
+.buttons { 
     grid-area: 6 / 2 / 7 / 3; 
     position: relative;
-    left: 60%;
-    border: 1px solid red;
+    left: 50%;
     color: white;
+}
+
+.editBtn {
+    margin-bottom: 15px;
+}
+
+.deleteBtn {
+    border: 2px solid red;
 }
 
 .returnBtn { 

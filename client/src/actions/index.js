@@ -10,7 +10,7 @@ export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const ORDER_BY_ATTACK = 'ORDER_BY_ATTACK';
 export const GET_POKEMON_DETAILS = 'GET_POKEMON_DETAILS';
 export const DELETE_POKEMON = 'DELETE_POKEMON';
-
+export const EDIT_POKEMON = 'EDIT_POKEMON';
 
 export function getPokemons() {
     return (dispatch) => {
@@ -167,3 +167,16 @@ export function deletePokemon (id) {
     }
 };
 
+export function editPokemon(id, payload) {
+    return async function(dispatch) {
+        try {
+            var json = await axios.put(`/pokemons/${id}`, payload)
+            return dispatch({
+                type: EDIT_POKEMON,
+                payload: json.data
+            });
+        } catch(err) {
+            console.log(err);
+        }
+    }
+}
