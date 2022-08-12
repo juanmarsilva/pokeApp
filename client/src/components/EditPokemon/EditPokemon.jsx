@@ -6,12 +6,8 @@ import InputRange from "../InputRange/InputRange";
 import { IoClose } from 'react-icons/io5';
 import { editPokemon, getPokemons } from "../../actions";
 
-const validate = (input, boolean) => {
+const validate = (input) => {
     let errors = {};
-
-    if(boolean === true) {
-        errors.name = 'That Pokemon already exists' 
-    };
     
     if(!input.name) {
         errors.name = 'A name is required'
@@ -27,39 +23,50 @@ const validate = (input, boolean) => {
         errors.height = 'Maximum 1000 meters';
     } else if(input.height < 0) {
         errors.height = 'Negative values are not allowed'
-    }
+    };
 
     if(input.weight > 10000) {
         errors.weight = 'Maximum 10,000Kg';
     }  else if(input.weight < 0) {
         errors.weight = 'Negative values are not allowed'
-    }
+    };
 
     return errors;
 }
 
 
-export default function EditPokemon({id}) {
+export default function EditPokemon({id, pokemonDetail}) {
 
     const dispatch = useDispatch();
-    const allPokemons = useSelector(state => state.allPokemons)
     const types = useSelector(state => state.types);
     const history = useHistory();
 
+    console.log(pokemonDetail);
+
+    const [ dataPrev, setDataPrev ] = useState({
+        name: pokemonDetail[0]['name'],
+        hp: pokemonDetail[0]['hp'],
+        attack: pokemonDetail[0]['attack'],
+        defense: pokemonDetail[0]['defense'],
+        speed: pokemonDetail[0]['speed'],
+        weight: pokemonDetail[0]['weight'],
+        height: pokemonDetail[0]['height'],
+        image: pokemonDetail[0]['image'],
+        types: pokemonDetail[0]['types'].map(t => t.name)
+    });
+
     const [input, setInput] = useState({
-        name: '',
-        attack: 0,
-        defense: 0,
-        speed: 0,
-        hp: 0,
-        weight: 0,
-        height: 0,
-        image: '',
-        types: []
+        attack: dataPrev.attack,
+        defense: dataPrev.defense,
+        speed: dataPrev.speed,
+        hp: dataPrev.hp,
+        weight: parseFloat(dataPrev.weight),
+        height: parseFloat(dataPrev.height),
+        image: dataPrev.image,
+        types: dataPrev.types,
     });
 
     const [ errors, setErrors ] = useState({});
-
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -67,11 +74,10 @@ export default function EditPokemon({id}) {
             ...input,
             [e.target.name]: e.target.value
         })
-        const repeatPokemon = allPokemons.find(p => p.name.toLowerCase() === input.name.toLowerCase()) ? true : false
         setErrors(validate({
             ...input,
             [e.target.name]: e.target.value
-        }, repeatPokemon));
+        }));
     }
 
     const handleSelect = (e) => {
@@ -99,7 +105,6 @@ export default function EditPokemon({id}) {
         dispatch(getPokemons());
         alert('Pokemon editado correctamente!');
         setInput({
-            name: '',
             hp: 0,
             attack: 0,
             defense: 0,
@@ -120,9 +125,8 @@ export default function EditPokemon({id}) {
             </div>
 
             <div className={s.containerName}>
-                <label className={s.name}>INSERT NAME:</label>
-                <input type='text' name='name' value={input.name} className={errors.name ? `${s.inputName} ${s.inputError}` : `${s.inputName}`} onChange={(e) => handleChange(e)} />
-                <span className={s.errorName}>{errors?.name}</span>
+                <label className={s.name}>INSERT NAME: </label>
+                <input type='text' name='name' value={dataPrev.name.toUpperCase()} className={s.inputName} placeholder={`${dataPrev.name.toUpperCase()}`} />
             </div>
 
             <div className={s.inputs}>
@@ -161,26 +165,26 @@ export default function EditPokemon({id}) {
                     <label>SELECT TYPES:</label>
                 </div>
 
-                <div className={!errors.types ? s.selectTypes : `${s.selectTypes} ${s.inputError}`}>
+                <div className={ s.selectTypes }>
                     <select onChange={(e) => handleSelect(e)} disabled={input.types.length === 2 ? true : false}>
                         {
                             types?.map(type => {
                                 return (
-                                    <option value={type.name} > {type} </option>
+                                    <option value={type} > {type} </option>
                                 )
                             })
                         }
                     </select>
                 </div>
 
-                <span className={s.errorTypes}>{errors?.types}</span>
-
+                <span className={s.errorTypes}>{errors?.types}</span>        
+                    
             </div>
 
             <div className={s.typesSelected}>
 
                 <ul>
-                    {input.types.map(type => {
+                    {input.types?.map(type => {
                         return (
                             <div className={`${s.divTypes} ${s[type]}`}>
                                 <li className={s.liTypes}> {type} </li>
@@ -198,7 +202,7 @@ export default function EditPokemon({id}) {
                     <button className={s.returnButton}>RETURN HOME</button>
                 </Link>
 
-                <button type="submit" disabled={errors.name || errors.weight || errors.height || errors.types ? true : false}>EDIT</button>
+                <button type="submit" disabled={errors.weight || errors.height || errors.types ? true : false}>EDIT</button>
 
             </div>
 

@@ -55,7 +55,6 @@ export function getNamePokemons (name) {
             }
         }
     };
-    
 };
 
 

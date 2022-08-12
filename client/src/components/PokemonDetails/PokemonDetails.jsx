@@ -17,7 +17,7 @@ export default function PokemonDetails() {
     const [ pokemonDetail, setPokemonDetail ] = useState(undefined);
     const [ edit, setEdit ] = useState(false);
     
-
+    
     useEffect(async () => {
         var json = await axios.get('/pokemons/' + id);
         setPokemonDetail(json.data);
@@ -43,7 +43,7 @@ export default function PokemonDetails() {
 
     return (
 
-        edit ? <EditPokemon id={pokemonDetail[0]['id']} /> :
+        edit ? <EditPokemon id={pokemonDetail[0]['id']} pokemonDetail={pokemonDetail}/> :
     
         <div className={!pokemonDetail[0].hasOwnProperty('createdInDb') ? `${s.container} ${s.api}` : s.container}>
 
