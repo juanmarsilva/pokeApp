@@ -41,7 +41,6 @@ export default function EditPokemon({id, pokemonDetail}) {
     const types = useSelector(state => state.types);
     const history = useHistory();
 
-    console.log(pokemonDetail);
 
     const [ dataPrev, setDataPrev ] = useState({
         name: pokemonDetail[0]['name'],
@@ -117,6 +116,8 @@ export default function EditPokemon({id, pokemonDetail}) {
         history.push('/home');
     };
 
+   
+
     return (
         <form onSubmit={(e) => handleSubmit(e)} className={s.form}>
             
@@ -168,7 +169,7 @@ export default function EditPokemon({id, pokemonDetail}) {
                 <div className={ s.selectTypes }>
                     <select onChange={(e) => handleSelect(e)} disabled={input.types.length === 2 ? true : false}>
                         {
-                            types?.map(type => {
+                            types.map(type => {
                                 return (
                                     <option value={type} > {type} </option>
                                 )
