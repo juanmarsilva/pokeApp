@@ -25,13 +25,6 @@ function rootReducer(state=initialState, {type, payload}) {
         };
     }
 
-    // if(type === FILTER_BY_TYPES) {
-    //     return {
-    //         ...state,
-    //         pokemons: payload
-    //     }
-    // }
-
     if(type === FILTER_BY_TYPES) {
         const allPokemons = state.allPokemons;
         const filterPokemons = payload === 'All' ? allPokemons : allPokemons.filter(pokemon => pokemon.types.includes(payload));
@@ -116,13 +109,6 @@ function rootReducer(state=initialState, {type, payload}) {
             pokemons: orderByAttackArr
         }
     }
-
-    // if(type === ORDER_BY_ATTACK) {
-    //     return {
-    //         ...state,
-    //         pokemons: payload,
-    //     }
-    // }
 
     if(type === GET_NAME_POKEMONS) {      
        return {
