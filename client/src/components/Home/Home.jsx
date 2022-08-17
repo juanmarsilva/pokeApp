@@ -41,6 +41,7 @@ export default function Home() {
         dispatch(getPokemons())
         dispatch(getTypes())
             .then(() => changeLoaderState())
+            .then(() => setCurrentPage(1))
     }
 
     function handleFilterByTypes(e) {
