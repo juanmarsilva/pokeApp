@@ -18,7 +18,7 @@ export default function Paginado({ pokemonsPerPage, allPokemons, paginado, handl
                     pageNumbers?.map(number => {
                         return (
                             <li key={number}>    
-                                <a className={s.number} onClick={() => paginado(number)}>{number}</a>
+                                <a className={currentPage === number ?  `${s.number} ${s.active}` : s.number} onClick={() => paginado(number)}>{number}</a>
                             </li>
                         )
                     })
