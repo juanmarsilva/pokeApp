@@ -72,6 +72,22 @@ export default function Home() {
         }, 4000)
     };
 
+    function handleNext(e, number) {
+        e.preventDefault();
+        const pages = Math.ceil(allPokemons.length/pokemonsPerPage);
+        if(currentPage !== pages) {
+            setCurrentPage(number + 1)
+        };
+    };
+
+    function handlePrevious(e, number) {
+        e.preventDefault();
+        const pages = Math.ceil(allPokemons.length/pokemonsPerPage);
+        if(currentPage !== 1) {
+            setCurrentPage(number - 1)
+        };
+    };
+
     return (
         <>
             {
@@ -94,7 +110,11 @@ export default function Home() {
                         <SearchBar key='searchbar' />   
 
                         <div>
-                            <Paginated pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} key='paginated' />
+                            {
+                                allPokemons.length 
+                                ? <Paginated currentPage={currentPage} pokemonsPerPage={pokemonsPerPage} allPokemons={allPokemons.length} paginado={paginado} key='paginated' handlePrevious={handlePrevious} handleNext={handleNext} />
+                                : <></>
+                            }
                         </div>
                         
                         {

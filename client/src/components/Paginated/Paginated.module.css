@@ -1,7 +1,23 @@
+.nav {
+    position: relative;
+    width: 300px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    left: 42%;
+    margin-top: 5px;
+}
+
+.next, .previous {
+    cursor: pointer;
+}
+
+
 .container {
     display: flex;
     justify-content: center;
     width: 100%;
+    
 }
 
 ul {

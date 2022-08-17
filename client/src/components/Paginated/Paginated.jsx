@@ -1,7 +1,8 @@
 import React from "react";
 import s from './Paginated.module.css';
+import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im';
 
-export default function Paginado({ pokemonsPerPage, allPokemons, paginado}) {
+export default function Paginado({ pokemonsPerPage, allPokemons, paginado, handleNext, handlePrevious, currentPage}) {
     
     const pageNumbers = [];
 
@@ -10,7 +11,8 @@ export default function Paginado({ pokemonsPerPage, allPokemons, paginado}) {
     }
 
     return (
-        <nav>
+        <nav className={s.nav}>
+            <ImArrowLeft2 color="white" size='25px' onClick={(e) => handlePrevious(e, currentPage)} className={s.previous} />
             <ul className={s.container}>
                 {
                     pageNumbers?.map(number => {
@@ -22,6 +24,7 @@ export default function Paginado({ pokemonsPerPage, allPokemons, paginado}) {
                     })
                 }
             </ul>
+            <ImArrowRight2 color="white" size='25px' onClick={(e) => handleNext(e, currentPage)} className={s.next} />
         </nav>
     )
 }
