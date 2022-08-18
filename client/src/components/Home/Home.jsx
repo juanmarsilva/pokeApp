@@ -27,6 +27,7 @@ export default function Home() {
     const [ orden, setOrden ] = useState('');
     const [ loader, setLoader ] = useState(false);
 
+
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
