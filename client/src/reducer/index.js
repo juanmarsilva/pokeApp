@@ -27,8 +27,8 @@ function rootReducer(state=initialState, {type, payload}) {
 
     if(type === FILTER_BY_TYPES) {
         const allPokemons = state.pokemons;
-        const filterPokemons = payload === 'All' ? allPokemons : allPokemons.filter(pokemon => pokemon.types.includes(payload));
-        const pokemonsOfDb = allPokemons.filter(pokemon => pokemon.createdInDb);
+        const filterPokemons = payload === 'All' ? state.allPokemons : allPokemons.filter(pokemon => pokemon.types.includes(payload));
+        const pokemonsOfDb = state.allPokemons.filter(pokemon => pokemon.createdInDb);
         let filterPokemonsDb = [];
         let allPokemonsFiltered = [];
         if(pokemonsOfDb.length) {
