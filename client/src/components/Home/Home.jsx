@@ -46,10 +46,12 @@ export default function Home() {
     }
 
     function handleFilterByTypes(e) {
+        setCurrentPage(1)
         dispatch(filterByTypes(e.target.value));
     };
 
     function handleFilterCreated(e) {
+        setCurrentPage(1);
         dispatch(filterCreated(e.target.value));
     };
 

@@ -92,7 +92,7 @@ export default function Form({handleSelect, handleChange, handleSubmit, handleDe
                     <button className={s.returnButton}>RETURN HOME</button>
                 </Link>
 
-                <button type="submit" disabled={errors.name || errors.weight || errors.height || errors.types ? true : false}>CREATE</button>
+                <button type="submit" disabled={errors.name || errors.weight || errors.height || errors.types || input.name === '' || !input.types.length ? true : false}>CREATE</button>
 
             </div>
 
