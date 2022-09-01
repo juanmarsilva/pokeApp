@@ -40,9 +40,8 @@ const getTypes = () => {
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
-  server.listen(process.env.PGPORT, async () => {
+  server.listen(process.env.PGPORT, () => {
     console.log(`%s listening at ${process.env.PGPORT}`); // eslint-disable-line no-console
-    console.log(process.env.NODE_ENV);
     getTypes();
   });
 });
