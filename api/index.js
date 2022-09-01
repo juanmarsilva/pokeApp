@@ -42,6 +42,7 @@ const getTypes = () => {
 conn.sync({ force: false }).then(() => {
   server.listen(process.env.PGPORT, async () => {
     console.log(`%s listening at ${process.env.PGPORT}`); // eslint-disable-line no-console
+    console.log(process.env.NODE_ENV);
     getTypes();
   });
 });
