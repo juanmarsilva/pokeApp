@@ -33,10 +33,6 @@ const getTypes = () => {
                     }
                 })
             })
-            return pokemonTypes;
-        })
-        .then((allTypes) => {
-            return allTypes
         })
         .catch(err => console.log(err));
 }
