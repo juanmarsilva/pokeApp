@@ -20,6 +20,7 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const axios = require('axios')
+const { Pokemon, Types } = require('./src/db');
 
 const getTypes = () => {
   axios.get('https://pokeapi.co/api/v2/type')
