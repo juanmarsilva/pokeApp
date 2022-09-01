@@ -19,29 +19,11 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const axios = require('axios')
-const { Pokemon, Types } = require('./src/db');
-
-const getTypes = () => {
-  axios.get('https://pokeapi.co/api/v2/type')
-        .then(res => {
-            const pokemonTypes = res.data.results.map(type => type.name);
-            pokemonTypes.forEach(t => {
-                Types.findOrCreate({
-                    where: {
-                        name: t
-                    }
-                })
-            })
-        })
-        .catch(err => console.log(err));
-}
 
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
-  server.listen(process.env.PGPORT, () => {
-    console.log(`%s listening at ${process.env.PGPORT}`); // eslint-disable-line no-console
-    getTypes();
+  server.listen(process.env.PORT, () => {
+    console.log(`%s listening at ${process.env.PORT}`); // eslint-disable-line no-console
   });
 });
