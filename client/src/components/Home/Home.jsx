@@ -10,6 +10,9 @@ import Filters from "../Filters/Filters";
 import Orderings from "../Orderings/Orderings";
 import CardsPokemon from "../Cards/CardsPokemon";
 import Loader from "../Loader/Loader";
+import { BsGithub } from 'react-icons/bs';
+
+const REPOSITORIO = 'https://github.com/juanmarsilva/pokeApp';
 
 
 export default function Home() {
@@ -107,6 +110,8 @@ export default function Home() {
                             <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} key='filters' />
 
                             <button onClick={e => handleClick(e)} className={s.pulse} key='recharge' >RECHARGE</button>
+
+                            <a href={REPOSITORIO}><BsGithub color="white" size='2rem' /></a>
 
                             <Link to='/pokemons'><button key='create' >CREATE</button></Link>
                         </div>
