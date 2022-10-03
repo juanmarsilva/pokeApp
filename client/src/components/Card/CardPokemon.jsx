@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import s from'./CardPokemon.module.css';
+import { Card } from './Styles';
 
 export default function CardPokemon({ name, image, types, id}) {
 
     return (
-        <div className={s.container} key={id}>
-
+        <Card>
             <img src={image} className={s.image} alt='img not found' width='200px' height='130px' />
 
             <Link className={s.link} to={`/home/${id}`}>
@@ -22,7 +22,7 @@ export default function CardPokemon({ name, image, types, id}) {
                 })}
             </div>
             
-        </div>
+        </Card>
     )
 }
 
