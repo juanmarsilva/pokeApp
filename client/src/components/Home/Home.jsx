@@ -11,9 +11,10 @@ import Orderings from "../Orderings/Orderings";
 import CardsPokemon from "../Cards/CardsPokemon";
 import Loader from "../Loader/Loader";
 import { BsGithub } from 'react-icons/bs';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const REPOSITORIO = 'https://github.com/juanmarsilva/pokeApp';
-
+const WHATSAPP = 'https://api.whatsapp.com/send?phone=5492324498482&text=Hola!';
 
 export default function Home() {
 
@@ -105,15 +106,21 @@ export default function Home() {
 
                             <div className={s.pokeball} key='pokeball'></div>
 
-                            <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack} key='orderings '/>
+                            {/* <a href={REPOSITORIO}><BsGithub color="white" size='2rem' /></a>
+                            <a href={WHATSAPP}><FaWhatsapp color="white" size='2rem' /></a> */}
 
-                            <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} key='filters' />
+                            <div className={s.filters}>
+                                <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack} key='orderings '/>
 
-                            <button onClick={e => handleClick(e)} className={s.pulse} key='recharge' >RECHARGE</button>
+                                <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} key='filters' />
+                            </div>
 
-                            <a href={REPOSITORIO}><BsGithub color="white" size='2rem' /></a>
+                            <div className={s.menuBtns}>
+                                <button onClick={e => handleClick(e)} className={s.pulse} key='recharge' >RECHARGE</button>
 
-                            <Link to='/pokemons'><button key='create' >CREATE</button></Link>
+                                <Link to='/pokemons'><button key='create' >CREATE</button></Link>
+                            </div>
+
                         </div>
 
                         <SearchBar key='searchbar' />   
@@ -134,6 +141,11 @@ export default function Home() {
                                 </div>
                         }
 
+                        <div className={s.bottomMenu}>
+                            <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack} key='orderings '/>
+
+                            <Filters handleFilterCreated={handleFilterCreated} handleFilterByTypes={handleFilterByTypes} allTypes={allTypes} key='filters' />
+                        </div>
                     </div>
             }
         </>

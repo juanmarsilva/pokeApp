@@ -4,7 +4,8 @@
     display: flex;
     justify-items: center;
     align-items: center;
-    left: 42%;
+    margin-right: auto;
+    margin-left: auto;
     margin-top: 5px;
 }
 

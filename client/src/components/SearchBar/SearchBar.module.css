@@ -1,12 +1,15 @@
 .container {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     height: 50px;
-    right: 50%;
-    left: 50%;
+    width: 300px;
+    margin-right: auto;
+    margin-left: auto;
     margin-top: 0.8rem;
+    border: 1px solid white;
+    border-radius: .9rem;
 }
 
 .searchInput {
@@ -14,20 +17,16 @@
     background: transparent;
     border: none;
     padding: 10px;
-    border: 1px solid white;
-    border-radius: 1rem;
     z-index: 0;
     color: white;
     font-size: 15px;
 }
 
 .icon {
-    position: relative;
-    top: 2%;
-    left: 6.5%;
     font-size: 20px;
     cursor: pointer;
     z-index: 1;
+    margin-right: .5rem;
 }
 
 .searchInput:focus {
