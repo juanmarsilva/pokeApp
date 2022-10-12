@@ -106,9 +106,6 @@ export default function Home() {
 
                             <div className={s.pokeball} key='pokeball'></div>
 
-                            {/* <a href={REPOSITORIO}><BsGithub color="white" size='2rem' /></a>
-                            <a href={WHATSAPP}><FaWhatsapp color="white" size='2rem' /></a> */}
-
                             <div className={s.filters}>
                                 <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack} key='orderings '/>
 
@@ -132,14 +129,20 @@ export default function Home() {
                                 : <></>
                             }
                         </div>
-                        
+
                         {
                             allPokemons.hasOwnProperty('msg') 
                                 ? <span className={s.msg}>{allPokemons.msg}</span> 
-                                : <div>
-                                    <CardsPokemon currentPokemons={currentPokemons} key='cards' /> 
-                                </div>
+                                :   <div>
+                                        <CardsPokemon currentPokemons={currentPokemons} key='cards' /> 
+                                    </div>
                         }
+
+                        <div className={s.social}>
+                            <a href={REPOSITORIO}><BsGithub color="white" size='2rem' /></a>
+
+                            <a href={WHATSAPP}><FaWhatsapp color="white" size='2rem' /></a>
+                        </div>
 
                         <div className={s.bottomMenu}>
                             <Orderings handleOrderByName={handleOrderByName} handleOrderByAttack={handleOrderByAttack} key='orderings '/>

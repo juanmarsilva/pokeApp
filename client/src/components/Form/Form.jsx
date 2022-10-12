@@ -72,18 +72,18 @@ export default function Form({handleSelect, handleChange, handleSubmit, handleDe
             </div>
 
             <div className={s.typesSelected}>
-
-                <ul>
-                    {input.types.map(type => {
-                        return (
-                            <div className={`${s.divTypes} ${s[type]}`}>
-                                <li className={s.liTypes}> {type} </li>
-                                <IoClose className={s.deleteBtn} onClick={(e) => handleDelete(type, e)} color='white' />
-                            </div>
-                        )
-                    })}
-                </ul>
-
+                <div>
+                    <ul>
+                        {input.types.map(type => {
+                            return (
+                                <div className={`${s.divTypes} ${s[type]}`}>
+                                    <li className={s.liTypes}> {type} </li>
+                                    <IoClose className={s.deleteBtn} onClick={(e) => handleDelete(type, e)} color='white' />
+                                </div>
+                            )
+                        })}
+                    </ul>
+                </div>
             </div>
 
             <div className={s.containerButton}>
@@ -97,7 +97,11 @@ export default function Form({handleSelect, handleChange, handleSubmit, handleDe
             </div>
 
             <div className={s.containerImage}>
-                <img className={s.image} src={input.image} width='200px'/>
+                {
+                    input.image.length
+                    ? <img className={s.image} src={input.image} width='200px' alt="imgPokemon"/>
+                    : <></>
+                }
             </div>
             
         </form>

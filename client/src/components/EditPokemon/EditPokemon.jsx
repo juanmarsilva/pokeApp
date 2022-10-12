@@ -208,7 +208,11 @@ export default function EditPokemon({id, pokemonDetail}) {
             </div>
 
             <div className={s.containerImage}>
-                <img className={s.image} src={input.image} width='200px'/>
+                {
+                    input.image.length
+                    ? <img className={s.image} src={input.image} width='200px' alt="imgPokemon"/>
+                    : <></>
+                }
             </div>
             
         </form>

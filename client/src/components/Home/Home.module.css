@@ -80,20 +80,20 @@ select:focus {
 /* Buttons */
 
 button {
-  text-decoration: none;
-  cursor: pointer;
-  border: 1px solid white;
-  border-radius: 8px;
-  height: 2.8em;
-  width: 10em;
-  padding: 0;
-  outline: none;
-  overflow: hidden;
-  color: white;
-  transition: color 0.3s 0.1s ease-out;
-  text-align: center;
-  line-height: 250%;
-  background: transparent;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 8px;
+    height: 2.8em;
+    width: 10em;
+    padding: 0;
+    outline: none;
+    overflow: hidden;
+    color: white;
+    transition: color 0.3s 0.1s ease-out;
+    text-align: center;
+    line-height: 250%;
+    background: transparent;
 }
 
 button:hover:enabled {
@@ -106,6 +106,15 @@ button:hover:enabled {
     display: flex;
     flex-direction: row;
     column-gap: 3rem;
+}
+
+.social {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2rem;
+    margin-top: 1rem;
+    align-items: center;
+    justify-content: center;
 }
 
 /* pokeball */
