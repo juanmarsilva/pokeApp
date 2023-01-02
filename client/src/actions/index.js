@@ -16,7 +16,7 @@ export const EDIT_POKEMON = 'EDIT_POKEMON';
 
 export function getPokemons() {
     return (dispatch) => {
-        axios.get('/pokemons')
+        axios('/pokemons')
             .then((json) => {
                 return dispatch({
                     type: GET_POKEMONS,
@@ -31,7 +31,7 @@ export function getPokemons() {
 export function getNamePokemons (name) {
     return async function(dispatch) {
         try {
-            var json = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
+            var json = await axios(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
             let specificPokemon = [];
             const pokemon = {
                 id: json.data.id,
@@ -47,7 +47,7 @@ export function getNamePokemons (name) {
             });
         } finally {
             try {
-                var json = await axios.get('/pokemons?name=' + name);
+                var json = await axios('/pokemons?name=' + name);
                 return dispatch({
                     type: GET_NAME_POKEMONS,
                     payload: json.data
@@ -71,7 +71,7 @@ export function postPokemons(payload) {
 export function getTypes() {
     return async (dispatch) => {
         try {
-            var types = await axios.get('/types')
+            var types = await axios('/types')
             return dispatch({
                 type: GET_TYPES,
                 payload: types.data
@@ -86,7 +86,7 @@ export function getTypes() {
 export function getPokemonDetails(id) {
     return async function(dispatch) {
         try {
-            var json = await axios.get('/pokemons/' + id);
+            var json = await axios('/pokemons/' + id);
             return dispatch({
                 type: GET_POKEMON_DETAILS,
                 payload: json.data
